@@ -8,11 +8,11 @@
 
 🛡️ Gradle `docker plugin` for projects with types and languages
 
-### Quickstart
+### Quick start
 
 You only need to have `docker-compose.yml` file in root of project
 
-> In your `buildgradle.kt` file:
+> In your `build.gradle.kt` file:
 
 ```kotlin
 plugins {
@@ -20,34 +20,42 @@ plugins {
 }
 ```
 
-### Available docker-tasks for `docker`-plugin:
+#### Run
 
-> Name of service for all tasks equalse to ${project.name} 
+```shell script
+./gradlew containers
+```
 
-`gradle stop` - stops docker-container 
+### Available gradle tasks for `docker-plugin`:
 
-`gradle containers` - print current docker-services
+> Name of service for all tasks equals to ${project.name} 
 
-`gradle remove` - removes docker-service
+* `stop` - stops docker-container 
 
-`gradle deploy` - compose up  docker-service from `docker-compose.yml`file
+* `containers` - print current docker-services
 
-`gradle deployDev` - compose up  docker-service from `docker-compose.dev.yml` file [optional]
+* `remove` - removes docker-service
 
-`gradle redeploy` - compose up after removing current docker-service
+* `deploy` - compose up  docker-service from `docker-compose.yml`file
 
-`gradle redeployDev` -- compose up after removing current docker-service from `docker-compose.dev.yml` file [optional]
+* `redeploy` - compose up after removing current docker-service
+
+##### Optional tasks
+
+> `docker-compose.yml` & `Dockerfile` files are optionals.
+
+* `deployDev` - compose up  docker-service from `docker-compose.dev.yml` file [optional]
+
+* `redeployDev` -- compose up after removing current docker-service from `docker-compose.dev.yml` file [optional]
 
 
-#### Apply only for subprojects
+##### Apply only for subprojects
 
 ```kotlin
 subprojects {
     apply<Docker>()
-    registerExecutorTask()
 }
 ```
 
-> `docker-compose.yml` & `Dockerfile` files are optionals.
 
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
