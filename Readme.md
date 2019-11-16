@@ -10,7 +10,7 @@ You only need to have `docker-compose.yml` file in root of project
 
 ```kotlin
 plugins {
-     id("online.colaba.docker") version "0.1"
+     id("online.colaba.docker") version "0.1.1"
 }
 ```
 

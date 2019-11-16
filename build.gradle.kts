@@ -6,7 +6,7 @@ plugins {
      id( "com.gradle.plugin-publish") version "0.10.1"
 }
 
-version = "0.1"
+version = "0.1.1"
 group = "online.colaba"
 description = "Docker needed tasks"
 
@@ -28,19 +28,19 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = "https://colaba.online/"
+    website = "https://github.com/steklopod/gradle-docker-plugin"
     vcsUrl = "https://github.com/steklopod/gradle-docker-plugin"
 
     (plugins) {
         "dockerPlugin" {
             displayName = "Docker needed tasks"
             tags = listOf("docker", "kotlin")
-            version = "0.1"
+            version = "0.1.1"
         }
         "dockerMainPlugin" {
             displayName = "Docker needed tasks for root multi-project"
             tags = listOf("docker", "kotlin")
-            version = "0.1"
+            version = "0.1.1"
         }
 
     }
