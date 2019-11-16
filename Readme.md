@@ -1,11 +1,12 @@
-# Gradle docker-plugin
+# Gradle docker-plugin [![Build Status](https://travis-ci.org/steklopod/gradle-docker-plugin.svg?branch=master)](https://travis-ci.org/steklopod/gradle-docker-plugin)
 
-Gradle plugin for docker is for any type and language
-
+🛡️ Gradle `docker plugin` for projects with types and languages
 
 ### Quickstart
 
-> In your `build.gradle.kt` file:
+You only need to have `docker-compose.yml` file in root of project
+
+> In your `buildgradle.kt` file:
 
 ```kotlin
 plugins {
@@ -17,19 +18,19 @@ plugins {
 
 > Name of service for all tasks equalse to ${project.name} 
 
-`./gradlew stop` - stops docker-container 
+`gradle stop` - stops docker-container 
 
-`./gradlew containers` - print current docker-services
+`gradle containers` - print current docker-services
 
-`./gradlew remove` - removes docker-service
+`gradle remove` - removes docker-service
 
-`./gradlew deploy` - compose up  docker-service from `docker-compose.yml`file
+`gradle deploy` - compose up  docker-service from `docker-compose.yml`file
 
-`./gradlew deployDev` - compose up  docker-service from `docker-compose.dev.yml` file [optional]
+`gradle deployDev` - compose up  docker-service from `docker-compose.dev.yml` file [optional]
 
-`./gradlew redeploy` - compose up after removing current docker-service
+`gradle redeploy` - compose up after removing current docker-service
 
-`./gradlew redeployDev` -- compose up after removing current docker-service from `docker-compose.dev.yml` file [optional]
+`gradle redeployDev` -- compose up after removing current docker-service from `docker-compose.dev.yml` file [optional]
 
 
 #### Apply only for subprojects
@@ -41,6 +42,4 @@ subprojects {
 }
 ```
 
-You only need to have `docker-compose.yml`
-
-`docker-compose.yml` & `Dockerfile` are optionals.
+> `docker-compose.yml` & `Dockerfile` files are optionals.
