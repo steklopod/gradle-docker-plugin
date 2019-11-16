@@ -1,11 +1,17 @@
 # Gradle docker-plugin
 
-Login:
-```shell script
-gradle login
+Gradle plugin for docker.
+
+### Quickstart
+
+> `build.gradle.kt`
+
+```kotlin
+plugins {
+     id("online.colaba.docker") version "0.1"
+     id("online.colaba.dockerMain") version "0.1"
+}
 ```
 
-Publish:
-```shell script
-gradle publishPlugins
-```
+> Run `gradle tasks` to see avialable tasks.
+

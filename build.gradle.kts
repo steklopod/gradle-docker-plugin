@@ -15,12 +15,12 @@ repositories { mavenLocal(); mavenCentral() }
 gradlePlugin {
     plugins {
         val dockerPlugin by registering {
-            id = "online.colaba.docker"; implementationClass = "online.colaba.Docker"
+            id = "online.colaba.docker"; implementationClass = "Docker"
             description = "Docker needed tasks"
         }
 
         val dockerMainPlugin by registering {
-            id = "online.colaba.dockerMain"; implementationClass = "online.colaba.DockerMain"
+            id = "online.colaba.dockerMain"; implementationClass = "DockerMain"
             description = "Docker needed tasks for root multi-project"
         }
     }
@@ -51,4 +51,11 @@ dependencies{
 }
 
 configure<JavaPluginConvention> { sourceCompatibility = VERSION_11; targetCompatibility = VERSION_11 }
-tasks{ withType<KotlinCompile> { kotlinOptions { jvmTarget = "11" } } }
+
+tasks{
+    withType<Wrapper> { gradleVersion = "6.0" }
+    withType<KotlinCompile> { kotlinOptions { jvmTarget = "11" } }
+}
+
+defaultTasks("tasks", "publishPlugins")
+
