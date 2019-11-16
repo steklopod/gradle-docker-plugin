@@ -42,7 +42,7 @@ plugins {
 
 ##### Optional tasks
 
-> `docker-compose.yml` & `Dockerfile` files are optionals.
+> `docker-compose.dev.yml`, `Dockerfile` & `Dockerfile.dev` files are optionals.
 
 * `deployDev` - compose up  docker-service from `docker-compose.dev.yml` file [optional]
 
