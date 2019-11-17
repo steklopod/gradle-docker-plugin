@@ -39,24 +39,20 @@
 ```
 
 ### Quick start
-
-You only need to have `docker-compose.yml` file in root of project
-
-> In your `build.gradle.kt` file:
-
+1. You only need to have `docker-compose.yml` file in root of project
+2. In your `build.gradle.kts` file:
 ```kotlin
 plugins {
      id("online.colaba.dockerMain") version "0.1.1"
 }
 ```
 
-#### Run
-
+### Rerun/start 🎯
 ```shell script
-./gradlew containers
+./gradlew -q
 ```
 
-### Available gradle tasks for `docker-plugin`:
+### Available gradle tasks for `dockerMain` plugin`:
 
 > Name of service for all tasks equals to ${project.name} 
 
@@ -70,20 +66,13 @@ plugins {
 
 * `recomposeAll` - compose up after removing current docker-service
 
-##### Optional tasks
+___
+##### Optional
 
 > `docker-compose.dev.yml`, `Dockerfile` & `Dockerfile.dev` files are optionals.
 
+Optional tasks: 
 
 * `composeDev` - compose up all docker-services from `docker-compose.dev.yml` file with recreate and rebuild. 
-Depends on `backend:assemble`.[optional]
-* `recomposeAllDev` - compose up after removing current docker-service from `docker-compose.dev.yml` file. [optional] 
-
-
-##### Apply only for subprojects
-
-```kotlin
-subprojects {
-    apply<DockerMain>()
-}
-```
+Depends on `backend:assemble`;
+* `recomposeAllDev` - compose up after removing current docker-service from `docker-compose.dev.yml` file. 

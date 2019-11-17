@@ -13,7 +13,7 @@ It gives helpful gradle's tasks for working with docker containers.
 
 1. You only need to have `docker-compose.yml` file in root of project
 
-2. In your `build.gradle.kt` file:
+2. In your `build.gradle.kts` file:
 
 ```kotlin
 plugins {
@@ -21,18 +21,18 @@ plugins {
 }
 ```
 
-### Rerun/start 🎯
+#### start/restart 🎯
 
 ```shell script
 ./gradlew deploy
 
 ```
-> this tasks is equivalent to `docker-compose up --build --force-recreate -d` command. 
+this tasks is equivalent to `docker-compose up --build --force-recreate -d` command. 
 
 
 ### Available gradle's tasks for `docker` plugin:
 
-> Name of service for all tasks equals to ${project.name}. You can customize options of each task.
+Name of service for all tasks equals to ${project.name}. You can customize options of each task.
 
 * `containers` - print current docker-services;
 * `deploy`     - compose up docker-service;
