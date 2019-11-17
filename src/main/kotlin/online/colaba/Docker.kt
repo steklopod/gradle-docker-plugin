@@ -7,12 +7,10 @@ import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.registering
 
-const val dockerPrefix = "docker"
 
 class Docker : Plugin<Project> {
-    companion object{
-        const val detachFlag = "--detach"
-        const val recreateFlags = "--build --force-recreate $detachFlag"
+    companion object {
+        val dockerPrefix = "docker"
     }
 
     override fun apply(project: Project): Unit = project.run {
@@ -25,7 +23,7 @@ class Docker : Plugin<Project> {
 
         tasks {
             val stop by registering(Executor::class) {
-                command ="$dockerPrefix stop $name"; group = dockerGroupName
+                command = "$dockerPrefix stop $name"; group = dockerGroupName
             }
             val containers by registering(Executor::class) {
                 containers(); group = dockerGroupName
@@ -46,12 +44,12 @@ class Docker : Plugin<Project> {
                 containers()
             }
 
-            val redeploy by registering(Executor::class)  {
+            val redeploy by registering(Executor::class) {
                 containers()
                 dependsOn(remove); finalizedBy(deploy); group = dockerGroupName
                 containers()
             }
-            val redeployDev by registering(Executor::class)  {
+            val redeployDev by registering(Executor::class) {
                 containers()
                 dependsOn(remove); finalizedBy(deployDev); group = dockerGroupName
                 containers()

@@ -7,7 +7,6 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
 
-
 open class DockerRemove : Executor() {
     init {
         group = dockerPrefix

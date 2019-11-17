@@ -6,7 +6,8 @@ plugins {
      id( "com.gradle.plugin-publish") version "0.10.1"
 }
 
-version = "0.1.2"
+val ver = "0.1.3"
+version = ver
 group = "online.colaba"
 description = "EASY-DEPLOY gradle needed tasks"
 
@@ -38,17 +39,17 @@ pluginBundle {
         "dockerPlugin" {
             displayName = "Docker needed tasks"
             tags = listOf("docker", "kotlin", "build.gradle.kts")
-            version = "0.1.2"
+            version = ver
         }
         "dockerMainPlugin" {
             displayName = "Docker needed tasks for root multi-project"
             tags = listOf("docker", "kotlin", "build.gradle.kts")
-            version = "0.1.2"
+            version = ver
         }
         "ftpDeployPlugin" {
             displayName = "FTP deploy ssh-plugin gradle tasks"
             tags = listOf("ssh", "kotlin", "sftp", "ftp")
-            version = "0.1.2"
+            version = ver
         }
 
     }
