@@ -1,3 +1,6 @@
+package online.colaba
+
+import dockerPrefix
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -22,7 +25,7 @@ open class DockerRemove : Executor() {
     }
 }
 
-fun Project.registerDockerRemoveTask() = tasks.register<DockerRemove>("dockerRemove")
+fun Project.registerDockerRemoveTask() = tasks.register<DockerRemove>("online.colaba.getDockerRemove")
 
 val Project.dockerRemove: TaskProvider<DockerRemove>
-    get() = tasks.named<DockerRemove>("dockerRemove")
+    get() = tasks.named<DockerRemove>("online.colaba.getDockerRemove")

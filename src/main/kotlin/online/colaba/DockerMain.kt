@@ -1,9 +1,19 @@
+package online.colaba
+
+import backendService
+import containers
+import dockerComposeUpRebuild
+import dockerComposeUpRebuildDev
+import dockerPrefix
+import frontendService
+import nginxService
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.registering
+import removeGroup
 
 class DockerMain : Plugin<Project> {
 
@@ -34,7 +44,9 @@ class DockerMain : Plugin<Project> {
                 finalizedBy(containers)
             }
 
-            val prune by registering(Executor::class) { command ="$dockerPrefix system prune -fa"; finalizedBy(containers) ; group = dockerPrefix }
+            val prune by registering(Executor::class) { command ="$dockerPrefix system prune -fa"; finalizedBy(containers) ; group =
+                dockerPrefix
+            }
 
             val composeNginx by registering(Executor::class) { dockerComposeUpRebuild(nginxService) }
             val composeBack by registering(Executor::class) { dockerComposeUpRebuild(backendService) }
@@ -42,7 +54,7 @@ class DockerMain : Plugin<Project> {
 
             val recomposeAll by registering { dependsOn(removeAll); finalizedBy(compose); group = dockerPrefix }
 
-            val recomposeAllDev by registering { dependsOn(removeAll); finalizedBy(composeDev); group = dockerPrefix  }
+            val recomposeAllDev by registering { dependsOn(removeAll); finalizedBy(composeDev); group = dockerPrefix }
         }
     }
 }

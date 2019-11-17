@@ -1,3 +1,6 @@
+package online.colaba
+
+import normalizeForWindows
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
@@ -11,6 +14,7 @@ import org.hidetake.groovy.ssh.core.Remote
 import org.hidetake.groovy.ssh.core.RunHandler
 import org.hidetake.groovy.ssh.core.Service
 import org.hidetake.groovy.ssh.session.SessionHandler
+import userHomePath
 import java.io.File
 
 open class Publisher : DefaultTask() {
@@ -18,14 +22,14 @@ open class Publisher : DefaultTask() {
         private const val defaultHost = "5.63.155.194"
         private const val defaultUser = "root"
 
-        const val publishTaskName = "publish"
+        const val publishTaskName = "online.colaba.getPublish"
         val defaultRsaPath = "$userHomePath/.ssh/id_rsa".normalizeForWindows()
 
         fun defaultServer(
-                targetHost: String? = defaultHost, sshUser: String? = defaultUser, idRsaPath: String? = defaultRsaPath
+            targetHost: String? = defaultHost, sshUser: String? = defaultUser, idRsaPath: String? = defaultRsaPath
         ) = Remote(sshUser).apply { host = targetHost; user = sshUser; identity = File(idRsaPath) }
 
-        fun Service.runSessions(action: RunHandler.() -> Unit) = run(delegateClosureOf(action))
+        fun Service.runSessions(action: RunHandler.() -> Unit): Any = run(delegateClosureOf(action))
         fun RunHandler.session(vararg remotes: Remote, action: SessionHandler.() -> Unit) = session(*remotes, delegateClosureOf(action))
 
         fun SessionHandler.put(from: Any, into: Any) = put(hashMapOf("from" to from, "into" to into))

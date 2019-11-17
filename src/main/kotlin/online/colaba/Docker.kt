@@ -1,4 +1,6 @@
 import Docker.Companion.detachFlag
+import online.colaba.DockerRemove
+import online.colaba.Executor
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getValue
@@ -27,7 +29,7 @@ class Docker : Plugin<Project> {
             }
             val remove by registering(DockerRemove::class) {
                 containers()
-                dependsOn(stop); remove = name; group = dockerGroupName
+                remove = name; group = dockerGroupName
                 containers()
             }
             val deploy by registering(Executor::class) {
