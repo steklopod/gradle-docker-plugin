@@ -25,7 +25,9 @@ open class Executor : Exec() {
         super.exec()
     }
 
-    fun npm(npmCommand: String) {  this.command ="$npmPrefix $npmCommand"; group = npmPrefix }
+
+    fun npm(npmCommand: String) { command ="$npmPrefix $npmCommand"; group = npmPrefix }
+
     fun npmRun(npmRunCommand: String) { npm("run $npmRunCommand") }
 }
 

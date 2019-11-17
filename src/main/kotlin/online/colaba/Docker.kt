@@ -17,8 +17,12 @@ class Docker : Plugin<Project> {
     }
 
     override fun apply(project: Project): Unit = project.run {
+        description = "Docker needed tasks"
+
         val name = project.name
         val dockerGroupName = "$dockerPrefix-$name"
+
+        registerExecutorTask()
 
         tasks {
             val stop by registering(Executor::class) {

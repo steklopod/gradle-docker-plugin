@@ -1,0 +1,84 @@
+# Gradle dockerMain-plugin  [![Build Status](https://travis-ci.org/steklopod/gradle-docker-plugin.svg?branch=master)](https://travis-ci.org/steklopod/gradle-docker-plugin)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=alert_status)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=bugs)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=security_rating)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
+
+🛡️ Gradle `docker plugin` for root multi-project
+
+### Requirement
+
+* `backend`'s **jar** distribution path: `${project.rootDir}/backend/build/libs/*.jar`
+
+* `frontend`'s **dist** folder path: `${project.rootDir}/frontend/dist`
+
+### Structure must be
+```shell script
+ root
+    -|backend
+       - ${project.rootDir}/backend/${project.buildDir}/libs/*.jar
+       - docker-compose.yml
+       - docker-compose.yml (optional)
+
+    -|frontend
+       -|dist
+       - docker-compose.yml
+       - docker-compose.yml (optional)
+
+    -|nginx
+       - docker-compose.yml
+       - docker-compose.yml (optional)
+
+```
+
+### Quick start
+
+You only need to have `docker-compose.yml` file in root of project
+
+> In your `build.gradle.kt` file:
+
+```kotlin
+plugins {
+     id("online.colaba.dockerMain") version "0.1.1"
+}
+```
+
+#### Run
+
+```shell script
+./gradlew containers
+```
+
+### Available gradle tasks for `docker-plugin`:
+
+> Name of service for all tasks equals to ${project.name} 
+
+* `removeBackAndFront` - remove containers
+* `removeAll` - remove all containers
+
+* `compose` - docker compose up all docker-services with recreate and rebuild
+* `composeNginx`, `composeBack`, `composeFront` - compose up with recreate and rebuild
+
+* `prune` - remove unused data
+
+* `recomposeAll` - compose up after removing current docker-service
+
+##### Optional tasks
+
+> `docker-compose.dev.yml`, `Dockerfile` & `Dockerfile.dev` files are optionals.
+
+
+* `composeDev` - compose up all docker-services from `docker-compose.dev.yml` file with recreate and rebuild. 
+Depends on `backend:assemble`.[optional]
+* `recomposeAllDev` - compose up after removing current docker-service from `docker-compose.dev.yml` file. [optional] 
+
+
+##### Apply only for subprojects
+
+```kotlin
+subprojects {
+    apply<DockerMain>()
+}
+```

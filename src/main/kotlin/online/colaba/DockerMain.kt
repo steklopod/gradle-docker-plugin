@@ -11,6 +11,9 @@ class DockerMain : Plugin<Project> {
 
     override fun apply(project: Project): Unit = project.run {
         description = "Docker needed tasks for root multi-project"
+
+        registerExecutorTask()
+
         tasks {
             val containers by registering(Executor::class)  { containers() }
 
