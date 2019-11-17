@@ -30,15 +30,15 @@ plugins {
 > this tasks is equivalent to `docker-compose up --build --force-recreate -d` command. 
 
 
-### Available gradle's tasks for `docker` plugin`:
+### Available gradle's tasks for `docker` plugin:
 
 > Name of service for all tasks equals to ${project.name}. You can customize options of each task.
 
-* `containers` - print current docker-services
-* `deploy`     - compose up  docker-service from `docker-compose.yml`file
-* `stop`       - stops docker-container 
-* `remove`     - removes docker-service
-* `redeploy`   - compose up after removing current docker-service
+* `containers` - print current docker-services;
+* `deploy`     - compose up docker-service;
+* `stop`       - stops docker-container;
+* `remove`     - removes docker-service;
+* `redeploy`   - compose up after removing current docker-service.
 
 ___
 ### [Example](https://github.com/steklopod/gradle-docker-plugin/tree/master/examples/hello) 🎫
@@ -61,11 +61,12 @@ services:
 ```
 
 ___
-##### Optional tasks
+##### Optional
 
 > `docker-compose.dev.yml`, `Dockerfile` & `Dockerfile.dev` files are optionals.
 
-* `deployDev` - compose up  docker-service from `docker-compose.dev.yml` file [optional]
+Optional tasks: 
 
-* `redeployDev` -- compose up after removing current docker-service from `docker-compose.dev.yml` file [optional]
+* `deployDev` - compose up  docker-service from `docker-compose.dev.yml` file;
+* `redeployDev` - compose up after removing current docker-service from `docker-compose.dev.yml` file.
 
