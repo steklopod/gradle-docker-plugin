@@ -1,9 +1,5 @@
 package online.colaba
 
-import containers
-import dockerComposeUpRebuild
-import dockerComposeUpRebuildDev
-import dockerPrefix
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getValue
