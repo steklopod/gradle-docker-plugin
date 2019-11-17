@@ -17,20 +17,25 @@
 ### Structure must be
 ```shell script
  root
-    -|backend
-       - ${project.rootDir}/backend/${project.buildDir}/libs/*.jar
-       - docker-compose.yml
-       - docker-compose.yml (optional)
-
-    -|frontend
-       -|dist
-       - docker-compose.yml
-       - docker-compose.yml (optional)
-
-    -|nginx
-       - docker-compose.yml
-       - docker-compose.yml (optional)
-
+    |-|backend/
+    |  - build/libs/*.jar
+    |  - build.gradle.kts
+    |  - docker-compose.yml
+    |  - docker-compose.dev.yml (optional)
+    |
+    |-|frontend/
+    |  - |dist/
+    |  - build.gradle.kts
+    |  - docker-compose.yml
+    |  - docker-compose.dev.yml (optional)
+    |
+    |-|nginx/
+    |   - build.gradle.kts
+    |   - docker-compose.yml
+    |   - default.conf
+    |   - domain.crt (optional)
+    |   - domain.key (optional)
+    |   - docker-compose.dev.yml (optional)
 ```
 
 ### Quick start
