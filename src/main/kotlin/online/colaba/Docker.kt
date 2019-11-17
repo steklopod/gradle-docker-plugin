@@ -1,6 +1,6 @@
-import Docker.Companion.detachFlag
-import online.colaba.DockerRemove
-import online.colaba.Executor
+package online.colaba
+
+import online.colaba.Docker.Companion.detachFlag
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getValue

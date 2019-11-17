@@ -1,6 +1,5 @@
 package online.colaba
 
-import dockerPrefix
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction

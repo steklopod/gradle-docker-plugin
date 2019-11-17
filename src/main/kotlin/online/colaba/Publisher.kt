@@ -1,6 +1,5 @@
 package online.colaba
 
-import normalizeForWindows
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
@@ -14,7 +13,6 @@ import org.hidetake.groovy.ssh.core.Remote
 import org.hidetake.groovy.ssh.core.RunHandler
 import org.hidetake.groovy.ssh.core.Service
 import org.hidetake.groovy.ssh.session.SessionHandler
-import userHomePath
 import java.io.File
 
 open class Publisher : DefaultTask() {

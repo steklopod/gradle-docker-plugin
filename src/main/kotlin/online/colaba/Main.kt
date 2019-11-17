@@ -1,4 +1,7 @@
+package online.colaba
+
 import org.gradle.api.tasks.Exec
+
 
 object Main
 
