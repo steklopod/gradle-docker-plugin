@@ -8,6 +8,16 @@ import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.registering
 
 class DockerMain : Plugin<Project> {
+    companion object {
+        const val frontendService = "frontend"
+        const val backendService = "backend"
+        const val nginxService = "nginx"
+
+        const val dockerPrefix = "docker"
+
+        const val buildGroup = "build"
+        const val removeGroup = "remove"
+    }
 
     override fun apply(project: Project): Unit = project.run {
         description = "Docker needed tasks for root multi-project"
@@ -15,7 +25,7 @@ class DockerMain : Plugin<Project> {
         registerExecutorTask()
 
         tasks {
-            val dockerPs by registering(Executor::class)  { containers(); group = dockerPrefix }
+            val dockerPs by registering(Executor::class) { containers(); group = dockerPrefix }
 
             val build by registering {
                 group = buildGroup
@@ -45,7 +55,8 @@ class DockerMain : Plugin<Project> {
                 finalizedBy(dockerPs)
             }
 
-            val prune by registering(Executor::class) { command ="$dockerPrefix system prune -fa"; finalizedBy(dockerPs) ;
+            val prune by registering(Executor::class) {
+                command = "$dockerPrefix system prune -fa"; finalizedBy(dockerPs);
                 group = dockerPrefix
             }
             val buildComposeDev by registering { dependsOn(build); finalizedBy(composeDev); group = "init" }

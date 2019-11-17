@@ -25,7 +25,7 @@ class Docker : Plugin<Project> {
 
         tasks {
             val stop by registering(Executor::class) {
-                command ="$dockerPrefix $stopGroup $name"; group = dockerGroupName
+                command ="$dockerPrefix stop $name"; group = dockerGroupName
             }
             val containers by registering(Executor::class) {
                 containers(); group = dockerGroupName

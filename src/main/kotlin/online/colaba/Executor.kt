@@ -11,6 +11,12 @@ import org.gradle.kotlin.dsl.register
 const val npmPrefix = "npm"
 
 open class Executor : Exec() {
+    companion object{
+        const val detachFlag = "--detach"
+        const val recreateFlags = "--build --force-recreate $detachFlag"
+        const val dockerPrefix = "docker"
+    }
+
     init {
         group = "execute"
         description = "Executes a command line process (example: `echo HELLO`, no need ['cmd', '/c'] prefix for windows)"
@@ -37,12 +43,12 @@ open class Executor : Exec() {
 
     fun dockerCompose(dockerComposeCommand: String) { command = "$dockerPrefix-compose $dockerComposeCommand"; group = dockerPrefix }
 
-    fun dockerComposeUp() { dockerCompose("up ${Docker.detachFlag}") }
-    fun dockerComposeUpDev(fileName: String? = "$dockerPrefix-compose.dev.yml") { dockerCompose("-f $fileName up ${Docker.detachFlag}") }
+    fun dockerComposeUp() { dockerCompose("up $detachFlag") }
+    fun dockerComposeUpDev(fileName: String? = "$dockerPrefix-compose.dev.yml") { dockerCompose("-f $fileName up $detachFlag") }
 
-    fun dockerComposeUpRebuild(command: String? = "") { dockerCompose("up ${Docker.recreateFlags} $command") }
+    fun dockerComposeUpRebuild(command: String? = "") { dockerCompose("up $recreateFlags $command") }
 
-    fun dockerComposeUpRebuildDev(fileName: String? = "$dockerPrefix-compose.dev.yml") { dockerCompose("-f $fileName up ${Docker.recreateFlags}") }
+    fun dockerComposeUpRebuildDev(fileName: String? = "$dockerPrefix-compose.dev.yml") { dockerCompose("-f $fileName up $recreateFlags") }
 
 }
 

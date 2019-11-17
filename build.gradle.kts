@@ -15,15 +15,15 @@ repositories { mavenLocal(); mavenCentral() }
 gradlePlugin {
     plugins {
         val dockerPlugin by registering {
-            id = "online.colaba.docker"; implementationClass = "Docker"
+            id = "online.colaba.docker"; implementationClass = "online.colaba.Docker"
             description = "Docker needed tasks"
         }
         val dockerMainPlugin by registering {
-            id = "online.colaba.dockerMain"; implementationClass = "DockerMain"
+            id = "online.colaba.dockerMain"; implementationClass = "online.colaba.DockerMain"
             description = "Docker needed tasks for root multi-project"
         }
         val ftpDeployPlugin by registering {
-            id = "online.colaba.ftpDeploy"; implementationClass = "FtpDeploy"
+            id = "online.colaba.ftpDeploy"; implementationClass = "online.colaba.FtpDeploy"
             description = "Ssh needed tasks for FTP deploy"
         }
     }
@@ -47,7 +47,7 @@ pluginBundle {
         }
         "ftpDeployPlugin" {
             displayName = "FTP deploy ssh-plugin gradle tasks"
-            tags = listOf("ssh", "kotlin", "sftp", "ftp", "build.gradle.kts")
+            tags = listOf("ssh", "kotlin", "sftp", "ftp")
             version = "0.1.2"
         }
 
