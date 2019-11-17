@@ -25,10 +25,25 @@ open class Executor : Exec() {
         super.exec()
     }
 
+    fun execute(execCommand: String) { command = execCommand; group = npmPrefix }
 
     fun npm(npmCommand: String) { command ="$npmPrefix $npmCommand"; group = npmPrefix }
 
     fun npmRun(npmRunCommand: String) { npm("run $npmRunCommand") }
+
+    fun containers() { command = "$dockerPrefix ps" }
+
+    fun dockerRemove(dockerComposeCommand: String) { command = "$dockerPrefix-compose $dockerComposeCommand"; group = dockerPrefix }
+
+    fun dockerCompose(dockerComposeCommand: String) { command = "$dockerPrefix-compose $dockerComposeCommand"; group = dockerPrefix }
+
+    fun dockerComposeUp() { dockerCompose("up ${Docker.detachFlag}") }
+    fun dockerComposeUpDev(fileName: String? = "$dockerPrefix-compose.dev.yml") { dockerCompose("-f $fileName up ${Docker.detachFlag}") }
+
+    fun dockerComposeUpRebuild(command: String? = "") { dockerCompose("up ${Docker.recreateFlags} $command") }
+
+    fun dockerComposeUpRebuildDev(fileName: String? = "$dockerPrefix-compose.dev.yml") { dockerCompose("-f $fileName up ${Docker.recreateFlags}") }
+
 }
 
 fun Project.registerExecutorTask() = tasks.register<Executor>("execute")

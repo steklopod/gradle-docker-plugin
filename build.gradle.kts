@@ -6,9 +6,9 @@ plugins {
      id( "com.gradle.plugin-publish") version "0.10.1"
 }
 
-version = "0.1.1"
+version = "0.1.2"
 group = "online.colaba"
-description = "Docker needed tasks"
+description = "EASY-DEPLOY gradle needed tasks"
 
 repositories { mavenLocal(); mavenCentral() }
 
@@ -18,10 +18,13 @@ gradlePlugin {
             id = "online.colaba.docker"; implementationClass = "Docker"
             description = "Docker needed tasks"
         }
-
         val dockerMainPlugin by registering {
             id = "online.colaba.dockerMain"; implementationClass = "DockerMain"
             description = "Docker needed tasks for root multi-project"
+        }
+        val ftpDeployPlugin by registering {
+            id = "online.colaba.ftpDeploy"; implementationClass = "FtpDeploy"
+            description = "Ssh needed tasks for FTP deploy"
         }
     }
 
@@ -34,13 +37,18 @@ pluginBundle {
     (plugins) {
         "dockerPlugin" {
             displayName = "Docker needed tasks"
-            tags = listOf("docker", "kotlin")
-            version = "0.1.1"
+            tags = listOf("docker", "kotlin", "build.gradle.kts")
+            version = "0.1.2"
         }
         "dockerMainPlugin" {
             displayName = "Docker needed tasks for root multi-project"
-            tags = listOf("docker", "kotlin")
-            version = "0.1.1"
+            tags = listOf("docker", "kotlin", "build.gradle.kts")
+            version = "0.1.2"
+        }
+        "ftpDeployPlugin" {
+            displayName = "FTP deploy ssh-plugin gradle tasks"
+            tags = listOf("ssh", "kotlin", "sftp", "ftp", "build.gradle.kts")
+            version = "0.1.2"
         }
 
     }

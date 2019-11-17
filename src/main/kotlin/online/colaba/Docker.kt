@@ -1,6 +1,5 @@
 package online.colaba
 
-import online.colaba.Docker.Companion.detachFlag
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getValue
@@ -60,17 +59,3 @@ class Docker : Plugin<Project> {
         }
     }
 }
-
-
-fun Executor.containers() { command = "$dockerPrefix ps" }
-
-fun Executor.dockerRemove(dockerComposeCommand: String) { command = "$dockerPrefix-compose $dockerComposeCommand"; group = dockerPrefix }
-
-fun Executor.dockerCompose(dockerComposeCommand: String) { command = "$dockerPrefix-compose $dockerComposeCommand"; group = dockerPrefix }
-
-fun Executor.dockerComposeUp() { dockerCompose("up $detachFlag") }
-fun Executor.dockerComposeUpDev(fileName: String? = "$dockerPrefix-compose.dev.yml") { dockerCompose("-f $fileName up $detachFlag") }
-
-fun Executor.dockerComposeUpRebuild(command: String? = "") { dockerCompose("up ${Docker.recreateFlags} $command") }
-
-fun Executor.dockerComposeUpRebuildDev(fileName: String? = "$dockerPrefix-compose.dev.yml") { dockerCompose("-f $fileName up ${Docker.recreateFlags}") }

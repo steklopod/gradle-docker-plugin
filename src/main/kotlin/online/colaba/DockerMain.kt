@@ -15,7 +15,13 @@ class DockerMain : Plugin<Project> {
         registerExecutorTask()
 
         tasks {
-            val containers by registering(Executor::class)  { containers() }
+            val dockerPs by registering(Executor::class)  { containers(); group = dockerPrefix }
+
+            val build by registering {
+                group = buildGroup
+                dependsOn(":$frontendService:$buildGroup")
+                finalizedBy(":$backendService:$buildGroup")
+            }
 
             val removeBackAndFront by registering {
                 group = dockerPrefix
@@ -30,18 +36,19 @@ class DockerMain : Plugin<Project> {
             }
 
             val compose by registering(Executor::class) {
-                dockerComposeUpRebuild(); finalizedBy(containers)
+                dockerComposeUpRebuild(); finalizedBy(dockerPs)
             }
 
             val composeDev by registering(Executor::class) {
                 dependsOn(":$backendService:assemble")
                 dockerComposeUpRebuildDev()
-                finalizedBy(containers)
+                finalizedBy(dockerPs)
             }
 
-            val prune by registering(Executor::class) { command ="$dockerPrefix system prune -fa"; finalizedBy(containers) ; group =
-                dockerPrefix
+            val prune by registering(Executor::class) { command ="$dockerPrefix system prune -fa"; finalizedBy(dockerPs) ;
+                group = dockerPrefix
             }
+            val buildComposeDev by registering { dependsOn(build); finalizedBy(composeDev); group = "init" }
 
             val composeNginx by registering(Executor::class) { dockerComposeUpRebuild(nginxService) }
             val composeBack by registering(Executor::class) { dockerComposeUpRebuild(backendService) }
