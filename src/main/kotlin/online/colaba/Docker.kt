@@ -10,7 +10,7 @@ import org.gradle.kotlin.dsl.registering
 
 class Docker : Plugin<Project> {
     companion object {
-        val dockerPrefix = "docker"
+        const val dockerPrefix = "docker"
     }
 
     override fun apply(project: Project): Unit = project.run {

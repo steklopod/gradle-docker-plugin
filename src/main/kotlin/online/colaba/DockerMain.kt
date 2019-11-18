@@ -9,13 +9,9 @@ import org.gradle.kotlin.dsl.registering
 
 class DockerMain : Plugin<Project> {
     companion object {
-        const val frontendService = "frontend"
-        const val backendService = "backend"
-        const val nginxService = "nginx"
 
         const val dockerPrefix = "docker"
 
-        const val buildGroup = "build"
         const val removeGroup = "remove"
     }
 

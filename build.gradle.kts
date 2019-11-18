@@ -23,8 +23,8 @@ gradlePlugin {
             id = "online.colaba.dockerMain"; implementationClass = "online.colaba.DockerMain"
             description = "Docker needed tasks for root multi-project"
         }
-        val ftpDeployPlugin by registering {
-            id = "online.colaba.ftpDeploy"; implementationClass = "online.colaba.FtpDeploy"
+        val sshPlugin by registering {
+            id = "online.colaba.ssh"; implementationClass = "online.colaba.Ssh"
             description = "Ssh needed tasks for FTP deploy"
         }
     }
@@ -46,7 +46,7 @@ pluginBundle {
             tags = listOf("docker", "kotlin", "build.gradle.kts")
             version = ver
         }
-        "ftpDeployPlugin" {
+        "sshPlugin" {
             displayName = "FTP deploy ssh-plugin gradle tasks"
             tags = listOf("ssh", "kotlin", "sftp", "ftp")
             version = ver
