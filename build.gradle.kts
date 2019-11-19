@@ -30,14 +30,9 @@ pluginBundle {
     (plugins) {
         "dockerPlugin" {
             displayName =
-                "\uD83D\uDEE1️ Docker needed tasks. \nYou only need to have docker-compose.yml file in root of project\n" +
-                        "Available gradle's tasks for docker plugin:\n" +
-                        "- containers - print current docker-services;\n" +
-                        "- deploy - compose up docker-service;\n" +
-                        "- stop - stops docker-container;\n" +
-                        "- remove - removes docker-service;\n" +
-                        "- redeploy - compose up after removing current docker-service."
-            tags = listOf("docker", "kotlin", "deploy", "build.gradle.kts", "docker-compose", "\uD83E\uDD1F\uD83C\uDFFB")
+                "\uD83D\uDEE1️ Docker needed tasks"
+            tags =
+                listOf("docker", "kotlin", "deploy", "build.gradle.kts", "docker-compose", "\uD83E\uDD1F\uD83C\uDFFB")
             version = pluginsVersion
         }
 
