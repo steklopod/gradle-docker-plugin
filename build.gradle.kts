@@ -3,13 +3,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `kotlin-dsl`
-     id( "com.gradle.plugin-publish") version "0.10.1"
+    id("com.gradle.plugin-publish") version "0.10.1"
 }
 
-val ver = "0.1.3"
-version = ver
-group = "online.colaba"
+val pluginsVersion = "0.1.4"
 description = "EASY-DEPLOY gradle needed tasks"
+version = pluginsVersion
+group = "online.colaba"
 
 repositories { mavenLocal(); mavenCentral() }
 
@@ -18,14 +18,6 @@ gradlePlugin {
         val dockerPlugin by registering {
             id = "online.colaba.docker"; implementationClass = "online.colaba.Docker"
             description = "Docker needed tasks"
-        }
-        val dockerMainPlugin by registering {
-            id = "online.colaba.dockerMain"; implementationClass = "online.colaba.DockerMain"
-            description = "Docker needed tasks for root multi-project"
-        }
-        val sshPlugin by registering {
-            id = "online.colaba.ssh"; implementationClass = "online.colaba.Ssh"
-            description = "Ssh needed tasks for FTP deploy"
         }
     }
 
@@ -37,31 +29,28 @@ pluginBundle {
 
     (plugins) {
         "dockerPlugin" {
-            displayName = "Docker needed tasks"
-            tags = listOf("docker", "kotlin", "build.gradle.kts")
-            version = ver
-        }
-        "dockerMainPlugin" {
-            displayName = "Docker needed tasks for root multi-project"
-            tags = listOf("docker", "kotlin", "build.gradle.kts")
-            version = ver
-        }
-        "sshPlugin" {
-            displayName = "FTP deploy ssh-plugin gradle tasks"
-            tags = listOf("ssh", "kotlin", "sftp", "ftp")
-            version = ver
+            displayName =
+                "\uD83D\uDEE1️ Docker needed tasks. \nYou only need to have docker-compose.yml file in root of project\n" +
+                        "Available gradle's tasks for docker plugin:\n" +
+                        "- containers - print current docker-services;\n" +
+                        "- deploy - compose up docker-service;\n" +
+                        "- stop - stops docker-container;\n" +
+                        "- remove - removes docker-service;\n" +
+                        "- redeploy - compose up after removing current docker-service."
+            tags = listOf("docker", "kotlin", "deploy", "build.gradle.kts", "docker-compose", "\uD83E\uDD1F\uD83C\uDFFB")
+            version = pluginsVersion
         }
 
     }
 }
 
-dependencies{
+dependencies {
     implementation("org.hidetake:groovy-ssh:2.10.1")
 }
 
 configure<JavaPluginConvention> { sourceCompatibility = VERSION_11; targetCompatibility = VERSION_11 }
 
-tasks{
+tasks {
     withType<Wrapper> { gradleVersion = "6.0" }
     withType<KotlinCompile> { kotlinOptions { jvmTarget = "11" } }
 }
