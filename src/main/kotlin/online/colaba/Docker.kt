@@ -1,59 +1,29 @@
 package online.colaba
 
-import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.invoke
-import org.gradle.kotlin.dsl.provideDelegate
-import org.gradle.kotlin.dsl.registering
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.TaskProvider
+import org.gradle.kotlin.dsl.named
+import org.gradle.kotlin.dsl.register
 
-
-class Docker : Plugin<Project> {
-    companion object {
-        const val dockerPrefix = "docker"
+open class Docker : Executor() {
+    init {
+        group = "$dockerPrefix-${project.name}"
+        description = "Docker task"
     }
 
-    override fun apply(project: Project): Unit = project.run {
-        description = "Docker needed tasks"
+    @get:Input
+    var exec = "ps"
 
-        val name = project.name
-        val dockerGroupName = "$dockerPrefix-$name"
-
-        registerExecutorTask()
-
-        tasks {
-            val stop by registering(Executor::class) {
-                command = "$dockerPrefix stop $name"; group = dockerGroupName
-            }
-            val containers by registering(Executor::class) {
-                containers(); group = dockerGroupName
-            }
-            val remove by registering(DockerRemove::class) {
-                containers()
-                remove = name; group = dockerGroupName
-                containers()
-            }
-            val deploy by registering(Executor::class) {
-                containers()
-                dockerComposeUpRebuild(); group = dockerGroupName
-                containers()
-            }
-            val deployDev by registering(Executor::class) {
-                containers()
-                dockerComposeUpRebuildDev(); group = dockerGroupName
-                containers()
-            }
-
-            val redeploy by registering(Executor::class) {
-                containers()
-                dependsOn(remove); finalizedBy(deploy); group = dockerGroupName
-                containers()
-            }
-            val redeployDev by registering(Executor::class) {
-                containers()
-                dependsOn(remove); finalizedBy(deployDev); group = dockerGroupName
-                containers()
-            }
-        }
+    @TaskAction
+    override fun exec() {
+        super.command = "$dockerPrefix $exec"
+        super.exec()
     }
 }
+
+fun Project.registerDockerTask() = tasks.register<Docker>("docker")
+
+val Project.docker: TaskProvider<Docker>
+    get() = tasks.named<Docker>("docker")
