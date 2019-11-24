@@ -21,14 +21,12 @@ plugins {
 }
 ```
 
-#### start/restart 🎯
+#### Run 🎯
 
 ```shell script
 ./gradlew deploy
-
 ```
-this tasks is equivalent to `docker-compose up --build --force-recreate -d` command. 
-
+> this task is equivalent to `docker-compose up --build --force-recreate -d` command. 
 
 ### Available gradle's tasks for `docker` plugin:
 
