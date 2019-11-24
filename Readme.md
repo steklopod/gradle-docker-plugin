@@ -6,7 +6,7 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=security_rating)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 
-🛡️ `docker` - gradle plugin for projects with any types and languages. 
+🛡️ [`docker` - gradle plugin](https://plugins.gradle.org/plugin/online.colaba.docker) for projects with any types and languages. 
 It gives helpful gradle's tasks for working with docker containers.
 
 ### Quick start
