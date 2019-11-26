@@ -1,0 +1,9 @@
+# docker-compose up
+
+version: "3.7"
+
+services:
+  hello:
+    image: hello-world
+    container_name: hello-dev
+    restart: always

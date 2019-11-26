@@ -1,4 +1,4 @@
-## Gradle `docker` plugin [![Build Status](https://travis-ci.org/steklopod/gradle-docker-plugin.svg?branch=master)](https://travis-ci.org/steklopod/gradle-docker-plugin)
+## Docker plugin for gradle[![Build Status](https://travis-ci.org/steklopod/gradle-docker-plugin.svg?branch=master)](https://travis-ci.org/steklopod/gradle-docker-plugin)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=alert_status)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=bugs)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
@@ -26,18 +26,53 @@ plugins {
 ```shell script
 ./gradlew deploy
 ```
-> this task is equivalent to `docker-compose up --build --force-recreate -d` command. 
+> this task is equivalent to `docker-compose up --build --force-recreate --detach` command. 
 
 ### Available gradle's tasks for `docker` plugin:
 
 Name of service for all tasks equals to ${project.name}. You can customize options of each task.
 
-* `containers` - print current docker-services;
-* `deploy`     - compose up docker-service;
-* `stop`       - stops docker-container;
-* `remove`     - removes docker-service;
-* `redeploy`   - compose up after removing current docker-service.
+* `containers` - print current docker-services
+* `deploy`     - compose up docker-service
+* `stop`       - stops docker-container
+* `remove`     - removes docker-service
+* `recompose`, `recomposeDev`   - compose up after removing current docker-service
 
+#### Customize
+
+```kotlin
+tasks{
+    docker{
+        exec = "rm -f ${project.name}"
+    }
+}
+```
+
+#### Run it
+
+```shell script
+./gradlew docker
+```
+
+___
+Another version:
+```kotlin
+tasks{
+    val remove by registering(Docker::class) { exec = "rm -f ${project.name}" }
+    
+    val deploy by existing(Docker::class){ 
+                                            dependsOn(remove)
+                                            recreate = false
+                                            composeFile = "docker-compose.dev.yml"
+                                         }
+}
+```
+
+#### Run it
+
+```shell script
+./gradlew deploy
+```
 ___
 ### [Example](https://github.com/steklopod/gradle-docker-plugin/tree/master/examples/hello) 🎫
 

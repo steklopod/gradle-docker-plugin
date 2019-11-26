@@ -4,3 +4,6 @@ repositories { jcenter(); mavenCentral() }
 
 defaultTasks("tasks", "deploy")
 
+tasks{
+    val remove by registering(Docker::class) { exec = "rm -f ${project.name}" }
+}
