@@ -41,7 +41,7 @@ Name of service for all tasks equals to ${project.name}. You can customize optio
 #### Customize
 
 ```kotlin
-docker{
+docker {
     exec = "rm -f ${project.name}"
 }
 ```
