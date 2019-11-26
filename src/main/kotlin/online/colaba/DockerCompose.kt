@@ -32,7 +32,9 @@ open class DockerCompose : Executor() {
         val recreateFlags = "--detach --build --force-recreate"
 
         if (isDev) composeFile = dockerComposedevFile
+
         composeFile?.let { exec = "-f $composeFile up " }
+
         if (recreate) exec += recreateFlags
 
         service?.let { exec += " $it" }

@@ -28,7 +28,6 @@ open class Executor : Exec() {
     fun npm(npmCommand: String) { command = "$npmPrefix $npmCommand"; group = npmPrefix }
     fun npmRun(npmRunCommand: String) { npm("run $npmRunCommand") }
 
-    fun containers() { command = "$dockerPrefix ps" }
 }
 
 fun Project.registerExecutorTask() = tasks.register<Executor>("execute")
