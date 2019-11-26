@@ -17,7 +17,7 @@ It gives helpful gradle's tasks for working with docker containers.
 
 ```kotlin
 plugins {
-     id("online.colaba.docker") version "0.2.2"
+     id("online.colaba.docker") version "0.2.3"
 }
 ```
 
@@ -41,10 +41,8 @@ Name of service for all tasks equals to ${project.name}. You can customize optio
 #### Customize
 
 ```kotlin
-tasks{
-    docker{
-        exec = "rm -f ${project.name}"
-    }
+docker{
+    exec = "rm -f ${project.name}"
 }
 ```
 
