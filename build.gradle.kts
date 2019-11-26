@@ -6,7 +6,7 @@ plugins {
     id("com.gradle.plugin-publish") version "0.10.1"
 }
 
-val pluginsVersion = "0.1.7"
+val pluginsVersion = "0.2.2"
 description = "EASY-DEPLOY gradle needed tasks"
 version = pluginsVersion
 group = "online.colaba"
