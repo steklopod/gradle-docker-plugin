@@ -55,14 +55,14 @@ docker {
 ___
 Another version:
 ```kotlin
-tasks{
+tasks {
     val remove by registering(Docker::class) { exec = "rm -f ${project.name}" }
     
-    val deploy by existing(Docker::class){ 
-                                            dependsOn(remove)
-                                            recreate = false
-                                            composeFile = "docker-compose.dev.yml"
-                                         }
+    val deploy by existing(DockerCompose::class){ 
+        dependsOn(remove)
+        recreate = false
+        composeFile = "docker-compose.dev.yml"
+     }
 }
 ```
 
