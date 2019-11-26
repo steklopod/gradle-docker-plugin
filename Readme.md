@@ -30,8 +30,6 @@ plugins {
 
 ### Available gradle's tasks for `docker` plugin:
 
-Name of service for all tasks equals to ${project.name}. You can customize options of each task.
-
 * `containers` - print current docker-services
 * `deploy`     - compose up docker-service
 * `stop`       - stops docker-container
@@ -42,18 +40,18 @@ Name of service for all tasks equals to ${project.name}. You can customize optio
 
 ```kotlin
 docker {
-    exec = "rm -f ${project.name}"
+    exec = "images"
 }
 ```
 
 #### Run it
 
 ```shell script
-./gradlew docker
+gradle docker
 ```
 
-___
-Another version:
+
+Another way to customize docker task:
 ```kotlin
 tasks {
     val remove by registering(Docker::class) { exec = "rm -f ${project.name}" }
@@ -61,12 +59,13 @@ tasks {
     val deploy by existing(DockerCompose::class){ 
         dependsOn(remove)
         recreate = false
+        service = "postgres"
         composeFile = "docker-compose.dev.yml"
      }
 }
 ```
 
-#### Run it
+#### Run it with gradle wrapper
 
 ```shell script
 ./gradlew deploy
@@ -101,3 +100,4 @@ Optional tasks:
 * `deployDev` - compose up  docker-service from `docker-compose.dev.yml` file;
 * `redeployDev` - compose up after removing current docker-service from `docker-compose.dev.yml` file.
 
+> Name of service for all tasks equals to ${project.name}. You can customize options of each task.
