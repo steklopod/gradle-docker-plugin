@@ -1,4 +1,4 @@
-## Docker plugin for gradle[![Build Status](https://travis-ci.org/steklopod/gradle-docker-plugin.svg?branch=master)](https://travis-ci.org/steklopod/gradle-docker-plugin)
+## Docker plugin for gradle[![Build Status](https://travis-ci.com/steklopod/gradle-docker-plugin.svg?branch=master)](https://travis-ci.com/steklopod/gradle-docker-plugin)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=alert_status)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=bugs)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
@@ -11,17 +11,17 @@ It gives helpful gradle's tasks for working with docker containers.
 
 ### Quick start
 
-1. You only need to have `docker-compose.yml` file in root of project
+1. You only need to have `docker-compose.yml` file in root of your project
 
 2. In your `build.gradle.kts` file:
 
 ```kotlin
 plugins {
-     id("online.colaba.docker") version "0.2.3"
+     id("online.colaba.docker") version "0.2.4"
 }
 ```
 
-#### Run 🎯
+#### Run task 🎯
 
 ```shell script
 ./gradlew deploy
@@ -30,50 +30,52 @@ plugins {
 
 ### Available gradle's tasks for `docker` plugin:
 
-* `containers` - print current docker-services
-* `deploy`     - compose up docker-service
-* `stop`       - stops docker-container
-* `remove`     - removes docker-service
-* `recompose`, `recomposeDev`   - compose up after removing current docker-service
+* `deploy` - compose up project from `docker-compose.yml` file (default with recreate & rebuild)
+* `deployDev`  - compose up docker container from `docker-compose.dev.yml` file
+* `recompose`, `recomposeDev`  - compose up after removing current docker-service
+* `stop`, `remove`      - stop/remove docker container
+* `containers`, `docker`  - print current docker-services
 
-#### Customize
+>Name of service for all tasks equals to ${project.name}. You can customize options of each task.
+
+#### Customize it in your `build.gradle.kts` file
 
 ```kotlin
-docker {
-    exec = "images"
+tasks{
+    docker{
+        exec = "rm -f ${project.name}"
+    }
 }
 ```
 
-#### Run it
+#### Run customized task
 
 ```shell script
 gradle docker
 ```
 
-
-Another way to customize docker task:
+#### Another version of customization:
 ```kotlin
-tasks {
+tasks{
     val remove by registering(Docker::class) { exec = "rm -f ${project.name}" }
     
-    val deploy by existing(DockerCompose::class){ 
-        dependsOn(remove)
-        recreate = false
-        service = "postgres"
-        composeFile = "docker-compose.dev.yml"
-     }
+    val deploy by existing(Docker::class){ 
+                                            dependsOn(remove)
+                                            recreate = false
+                                            composeFile = "docker-compose.dev.yml"
+                                         }
 }
 ```
 
-#### Run it with gradle wrapper
+#### Run customized task
 
 ```shell script
-./gradlew deploy
+gradle deploy
 ```
 ___
-### [Example](https://github.com/steklopod/gradle-docker-plugin/tree/master/examples/hello) 🎫
+#### [Example](https://github.com/steklopod/gradle-docker-plugin/tree/master/examples/hello) 🎫
 
-* Structure
+* Structure:
 ```shell script
 hello
      |  - build.gradle.kts
@@ -81,7 +83,7 @@ hello
      |  - docker-compose.dev.yml (optional)
 ```
 
-* `docker-compose.yml` file
+* `docker-compose.yml` file:
 ```shell script
 version: "3.7"
 services:
@@ -91,13 +93,16 @@ services:
 ```
 
 ___
+
 ##### Optional
 
 > `docker-compose.dev.yml`, `Dockerfile` & `Dockerfile.dev` files are optionals.
 
-Optional tasks: 
-
-* `deployDev` - compose up  docker-service from `docker-compose.dev.yml` file;
-* `redeployDev` - compose up after removing current docker-service from `docker-compose.dev.yml` file.
-
-> Name of service for all tasks equals to ${project.name}. You can customize options of each task.
+With `docker plugin` you have additional bonus task for executing a command line process on local PC [linux/windows]:
+```kotlin
+tasks{
+       execute{
+                command = "echo ${project.name}"
+       }
+}
+```

@@ -1,13 +1,10 @@
-import org.gradle.api.JavaVersion.VERSION_11
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     `kotlin-dsl`
     id("com.gradle.plugin-publish") version "0.10.1"
 }
 
-val pluginsVersion = "0.2.2"
-description = "EASY-DEPLOY gradle needed tasks"
+val pluginsVersion = "0.2.4"
+description = "Easy deploy by SSH with docker"
 version = pluginsVersion
 group = "online.colaba"
 
@@ -27,27 +24,26 @@ gradlePlugin {
 
 pluginBundle {
     website = "https://github.com/steklopod/gradle-docker-plugin"
-    vcsUrl = "https://github.com/steklopod/gradle-docker-plugin"
+    vcsUrl = "https://github.com/steklopod/gradle-docker-plugin.git"
 
     (plugins) {
         dockerPlugin {
-            displayName = "\uD83D\uDEE1️ Docker needed tasks."
-            tags = listOf("docker", "kotlin", "deploy", "build.gradle.kts", "docker-compose", "\uD83E\uDD1F\uD83C\uDFFB")
+            displayName = "Docker needed tasks."
+            tags = listOf("docker", "kotlin", "deploy", "build.gradle.kts", "docker-compose")
             version = pluginsVersion
         }
 
     }
 }
 
-dependencies {
-    implementation("org.hidetake:groovy-ssh:2.10.1")
-}
+dependencies { implementation("org.hidetake:groovy-ssh:2.10.1") }
 
-configure<JavaPluginConvention> { sourceCompatibility = VERSION_11; targetCompatibility = VERSION_11 }
+//configure<JavaPluginConvention> { sourceCompatibility = VERSION_11; targetCompatibility = VERSION_11 }
 
 tasks {
-    withType<Wrapper> { gradleVersion = "6.0" }
-    withType<KotlinCompile> { kotlinOptions { jvmTarget = "11" } }
+    wrapper { gradleVersion = "6.0" }
+    val java = "11"
+    compileKotlin { kotlinOptions { jvmTarget = java }; sourceCompatibility = java; targetCompatibility = java }
 }
 
 defaultTasks("tasks", "publishPlugins")

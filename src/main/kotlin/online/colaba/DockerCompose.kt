@@ -39,7 +39,6 @@ open class DockerCompose : Executor() {
 
         service?.let { exec += " $it" }
         val runCommand = "$dockerPrefix-compose $exec".trim()
-        System.err.println(">>>>>>  $runCommand\n")
         super.command = runCommand
         super.exec()
     }

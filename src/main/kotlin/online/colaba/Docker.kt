@@ -10,7 +10,7 @@ import org.gradle.kotlin.dsl.register
 open class Docker : Executor() {
     init {
         group = "$dockerPrefix-${project.name}"
-        description = "Docker task"
+        description = "Docker task for customization (by default only print current docker-services)"
     }
 
     @get:Input
