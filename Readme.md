@@ -1,4 +1,4 @@
-### 🛡️ [`docker` - gradle plugin](https://plugins.gradle.org/plugin/online.colaba.docker) for projects with any types and languages [![Build Status](https://travis-ci.com/steklopod/gradle-docker-plugin.svg?branch=master)](https://travis-ci.com/steklopod/gradle-docker-plugin) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=alert_status)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
+### [`Docker`](https://plugins.gradle.org/plugin/online.colaba.docker) - gradle plugin [![Build Status](https://travis-ci.com/steklopod/gradle-docker-plugin.svg?branch=master)](https://travis-ci.com/steklopod/gradle-docker-plugin) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=alert_status)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=bugs)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
@@ -6,7 +6,7 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=security_rating)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 
-This plugin gives helpful gradle tasks for working with docker containers.
+🛡 This plugin gives helpful gradle tasks for working with docker containers for projects with any types and languages.
 
 #### Quick start
 
@@ -20,14 +20,14 @@ plugins {
 }
 ```
 
-#### Run task 🎯
+#### 🎯 Run task 
 
 ```shell script
-./gradlew deploy
+gradle deploy
 ```
 > this task is equivalent to `docker-compose up --build --force-recreate --detach` command. 
 
-### Available gradle's tasks for `docker` plugin:
+#### Available tasks for `docker` plugin:
 
 * `deploy` - compose up project from `docker-compose.yml` file (default with recreate & rebuild)
 * `deployDev`  - compose up docker container from `docker-compose.dev.yml` file
@@ -46,13 +46,6 @@ tasks{
     }
 }
 ```
-
-#### Run customized task
-
-```shell script
-gradle docker
-```
-
 #### Another version of customization:
 ```kotlin
 tasks{
@@ -72,7 +65,7 @@ tasks{
 gradle deploy
 ```
 ___
-#### [Example](https://github.com/steklopod/gradle-docker-plugin/tree/master/examples/hello) 🎫
+#### 🎫 [Example](https://github.com/steklopod/gradle-docker-plugin/tree/master/examples/hello) 
 
 * Structure:
 ```shell script
@@ -81,21 +74,12 @@ ___
      | - docker-compose.yml
      | - docker-compose.dev.yml (optional)
 ```
-> `docker-compose.dev.yml`, `Dockerfile` & `Dockerfile.dev` files are optionals
 
-* `docker-compose.yml` file:
-```yaml
-version: "3.7"
-services:
-  hello:
-    image: hello-world
-    container_name: hello
-```
+> `docker-compose.dev.yml`, `Dockerfile` & `Dockerfile.dev` files are optionals
 
 ___
 
 ##### Optional
-
 
 With `docker plugin` you have additional bonus task for executing a command line process on local PC [linux/windows]:
 ```kotlin
