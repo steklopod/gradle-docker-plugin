@@ -3,7 +3,7 @@ plugins {
     id("com.gradle.plugin-publish") version "0.10.1"
 }
 
-val pluginsVersion = "1.0.1"
+val pluginsVersion = "1.0.3"
 description = "Easy deploy by SSH with docker"
 version = pluginsVersion
 group = "online.colaba"
@@ -41,7 +41,7 @@ dependencies { implementation("org.hidetake:groovy-ssh:2.10.1") }
 //configure<JavaPluginConvention> { sourceCompatibility = VERSION_11; targetCompatibility = VERSION_11 }
 
 tasks {
-    wrapper { gradleVersion = "6.0" }
+    wrapper { gradleVersion = "6.1-rc-1" }
     val java = "11"
     compileKotlin { kotlinOptions { jvmTarget = java }; sourceCompatibility = java; targetCompatibility = java }
 }
