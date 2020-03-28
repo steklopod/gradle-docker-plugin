@@ -1,4 +1,6 @@
-### [`Docker`](https://plugins.gradle.org/plugin/online.colaba.docker) - gradle plugin [![Build Status](https://travis-ci.com/steklopod/gradle-docker-plugin.svg?branch=master)](https://travis-ci.com/steklopod/gradle-docker-plugin) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=alert_status)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
+### [`Docker`](https://plugins.gradle.org/plugin/online.colaba.docker) - gradle plugin 
+![Backend CI](https://github.com/steklopod/gradle-docker-plugin/workflows/Backend%20CI/badge.svg)
+[[![Build Status](https://travis-ci.com/steklopod/gradle-docker-plugin.svg?branch=master)](https://travis-ci.com/steklopod/gradle-docker-plugin) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=alert_status)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=bugs)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=steklopod_gradle-docker-plugin&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=steklopod_gradle-docker-plugin)
@@ -16,7 +18,7 @@
 
 ```kotlin
 plugins {
-     id("online.colaba.docker") version "1.1.0"
+     id("online.colaba.docker") version "1.1.1"
 }
 ```
 
