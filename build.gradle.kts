@@ -1,11 +1,13 @@
+import org.gradle.api.JavaVersion.*
+
 plugins {
     `kotlin-dsl`
     id("com.gradle.plugin-publish") version "0.11.0"
 }
 
 val pluginsVersion = "1.1.1"
-description = "Easy deploy by SSH with docker"
 version = pluginsVersion
+description = "Easy deploy by SSH with docker"
 group = "online.colaba"
 
 repositories { mavenLocal(); mavenCentral() }
@@ -15,11 +17,9 @@ val dockerPlugin = "dockerPlugin"
 gradlePlugin {
     plugins {
         create(dockerPlugin) {
-            id = "$group.docker"; implementationClass = "$group.DockerPlugin"
-            description = "Docker needed tasks"
+            id = "$group.docker"; implementationClass = "$group.DockerPlugin"; description = "Docker needed tasks"
         }
     }
-
 }
 
 pluginBundle {
@@ -29,16 +29,13 @@ pluginBundle {
     (plugins) {
         dockerPlugin {
             displayName = "Docker needed tasks."
-            tags = listOf("docker", "kotlin", "deploy", "build.gradle.kts", "docker-compose")
+            tags = listOf("docker", "kotlin", "deploy", "docker-compose")
             version = pluginsVersion
         }
-
     }
 }
 
-dependencies { implementation("org.hidetake:groovy-ssh:2.10.1") }
-
-//configure<JavaPluginConvention> { sourceCompatibility = VERSION_11; targetCompatibility = VERSION_11 }
+configure<JavaPluginConvention> { sourceCompatibility = VERSION_11; targetCompatibility = VERSION_11 }
 
 tasks {
     val java = "11"
