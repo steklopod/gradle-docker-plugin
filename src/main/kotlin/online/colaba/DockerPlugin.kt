@@ -10,20 +10,23 @@ class DockerPlugin : Plugin<Project> {
 
         registerDockerTask()
         registerExecutorTask()
+        registerDockerComposeTask()
 
         tasks {
-            docker {   }
+            execute         {  }
+            docker          {  }
+            dockerComposeUp {  }
+            val logs by registering(Docker::class) { exec = "logs ${project.name}"; description = "Print logs of current docker container" }
 
-            execute{   }
+            val deploy by registering(ComposeDocker::class){ finalizedBy(logs); description = "Docker compose up (default with recreate & rebuild)" }
+            val deployDev by registering(ComposeDocker::class) { finalizedBy(logs); isDev = true; description = "Docker compose up from `docker-compose.dev.yml` file" }
 
-            val deploy by registering(DockerCompose::class){ description = "Docker compose up (default with recreate & rebuild)" }
-            val deployDev by registering(DockerCompose::class) { isDev = true; description = "Docker compose up from `docker-compose.dev.yml` file" }
-
-
-            register("logs", Docker::class) { exec = "logs ${project.name}"; description = "Print logs of current docker container" }
-            register("stop", Docker::class) { exec = "stop ${project.name}"; description = "Stop docker container" }
-
-            val remove by registering(Docker::class) { exec = "rm -f ${project.name}"; description = "Remove docker container (default container to remove = {project.name})" }
+            val stop by registering(Docker::class) { exec = "stop ${project.name}"; description = "Stop docker container" }
+            val remove by registering(Docker::class) {
+                dependsOn(stop)
+                exec = "rm -f ${project.name}"
+                description = "Remove docker container (default container to remove = {project.name})"
+            }
 
             register("recompose") { dependsOn(remove); finalizedBy(deploy); description = "Compose up after removing current docker service" }
             register("recomposeDev") { dependsOn(remove); finalizedBy(deployDev); description = "Compose up from `docker-compose.dev.yml` file after removing current docker service" }

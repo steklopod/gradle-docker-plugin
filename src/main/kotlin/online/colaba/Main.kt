@@ -12,7 +12,6 @@ const val dockerPrefix = "docker"
 const val dockerfile = "Dockerfile"
 const val dockerignoreFile = ".dockerignore"
 const val dockerComposeFile = "docker-compose.yml"
-const val dockerComposedevFile = "docker-compose.dev.yml"
 const val removeGroup = "remove"
 
 

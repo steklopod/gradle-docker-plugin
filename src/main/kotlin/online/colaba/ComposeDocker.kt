@@ -8,7 +8,7 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
 
-open class DockerCompose : Executor() {
+open class ComposeDocker : Executor() {
     init {
         group = "$dockerPrefix-${project.name}"
         description = "Docker-compose task"
@@ -17,19 +17,24 @@ open class DockerCompose : Executor() {
     @get:Input
     @Optional
     var composeFile: String? = null
+
     @get:Input
     @Optional
     var service: String? = null
+
     @get:Input
     var exec: String = "up "
+
     @get:Input
     var recreate: Boolean = true
+
     @get:Input
     var isDev: Boolean = false
 
     @TaskAction
     override fun exec() {
         val recreateFlags = "--detach --build --force-recreate"
+        val dockerComposedevFile = "docker-compose.dev.yml"
 
         if (isDev) composeFile = dockerComposedevFile
 
@@ -44,7 +49,8 @@ open class DockerCompose : Executor() {
     }
 }
 
-fun Project.registerDockerComposeTask() = tasks.register<DockerCompose>("compose")
 
-val Project.compose: TaskProvider<DockerCompose>
-    get() = tasks.named<DockerCompose>("compose")
+fun Project.registerDockerComposeTask() = tasks.register<ComposeDocker>("dockerComposeUp")
+
+val Project.dockerComposeUp: TaskProvider<ComposeDocker>
+    get() = tasks.named<ComposeDocker>("dockerComposeUp")
