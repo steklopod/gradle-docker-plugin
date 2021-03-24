@@ -1,11 +1,9 @@
-plugins { id("online.colaba.docker") version "1.1.1" }
+plugins { id("online.colaba.docker") version "1.1.2" }
 
-repositories { jcenter(); mavenCentral() }
+repositories { mavenCentral() }
 
 defaultTasks("tasks", "deploy")
 
-tasks{
-    withType<Wrapper> { gradleVersion = "6.0" }
 
 /*
     val remove by registering(Docker::class) {
