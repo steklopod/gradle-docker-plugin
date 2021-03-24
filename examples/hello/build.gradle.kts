@@ -1,4 +1,4 @@
-plugins { id("online.colaba.docker") version "1.1.2" }
+plugins { id("online.colaba.docker") version "1.2" }
 
 repositories { mavenCentral() }
 
