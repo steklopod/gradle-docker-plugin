@@ -6,15 +6,13 @@ import org.gradle.kotlin.dsl.*
 
 class DockerPlugin : Plugin<Project> { override fun apply(project: Project): Unit = project.run {
 
-    description = "Docker needed tasks"
+description = "Docker needed tasks"
 
-registerDockerTask()
-registerExecutorTask()
-registerDockerComposeTask()
-registerTSOpenapiGeneratorTask()
+registerDockerTask(); registerExecutorTask(); registerDockerComposeTask(); registerTSOpenapiGeneratorTask()
 tasks {
-    apiTs         {  }
     execute         {  }
+    schema          {  }
+
     docker          {  }
     dockerComposeUp {  }
 

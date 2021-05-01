@@ -4,8 +4,8 @@ plugins {
 }
 
 val name = "docker"
-val pluginsVersion = "1.2.30"
-description = "Easy deploy by SSH with docker"
+val pluginsVersion = "1.2.4"
+description = "Docker helper tasks"
 version = pluginsVersion
 group = "online.colaba"
 repositories { mavenLocal(); mavenCentral() }
