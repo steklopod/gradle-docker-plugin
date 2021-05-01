@@ -19,7 +19,7 @@ open class Executor : Exec() {
 
     @TaskAction
     override fun exec() {
-        commandLine = windowsPrefix + command.splitBySpace()
+        commandLine = windowsPrefix + command.split(" ").map { it.trim() }
         println("> Executing command: $commandLine\n")
         super.exec()
     }

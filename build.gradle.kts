@@ -4,7 +4,7 @@ plugins {
 }
 
 val name = "docker"
-val pluginsVersion = "1.2"
+val pluginsVersion = "1.2.30"
 description = "Easy deploy by SSH with docker"
 version = pluginsVersion
 group = "online.colaba"
@@ -17,7 +17,7 @@ pluginBundle {
     vcsUrl = "https://github.com/steklopod/gradle-docker-plugin.git"
     (plugins) { name {
             displayName = "Docker needed tasks."
-            tags = listOf("docker", "kotlin", "deploy", "docker-compose")
+            tags = listOf("docker", "deploy", "docker-compose")
             version = pluginsVersion
 } } }
 tasks { compileKotlin { kotlinOptions { jvmTarget = "15" } } }
