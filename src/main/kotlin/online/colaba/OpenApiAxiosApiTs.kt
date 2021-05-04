@@ -10,42 +10,48 @@ import java.io.File
 import java.nio.file.Files
 
 
-open class OpenApiSchemaTs : Executor() {
+open class OpenApiAxiosApiTs : Executor() {
     init {
         group = "$dockerPrefix-${project.name}"
-        description = "Generating [ ../frontend/types/schema-${project.name}.ts ] from OPEN API docs.yaml."
+        description = "Generating [ TypeScript Axios API] from OPEN API docs.yaml."
     }
 
     @get:Input var fromLocation : String = "/src/test/resources"
     @get:Input var fromFilename : String = "docs.yaml"
 
-    @get:Input var toFolder   : String = "/frontend/types"
+    @get:Input var toFolder   : String = "/frontend/types/api"
     @get:Input var toFilename : String = "schema-${project.name}"
+
+    @get:Input var addInfo    : String = "--generator-name typescript-axios --additional-properties=library=spring-boot"
 
     @TaskAction fun run() {
         val from = "$fromLocation/$fromFilename"
         val fromSchema = fromOpenApiScheme(from)
-        val toSchema = File("${project.rootDir}/$toFolder/$toFilename.ts".normal())
-
-        Files.createDirectories(toSchema.parentFile.toPath())
+        val toFolder = File("${project.rootDir}/$toFolder".normal())
 
         when {
             fromSchema.exists() -> {
                 println("\t 🔪 [${project.name.toUpperCase()}] 🔫 Found schema: $fromFilename")
-                super.command = "npx openapi-typescript $fromSchema --output $toSchema"
+
+                super.command = "openapi-generator-cli generate -i $fromSchema -o $toFolder $addInfo"
                 super.exec()
 
                 File("${project.rootDir}/${project.name}/Users").deleteRecursively() // fix empty folder creation
+
+                File("$toFolder/.openapi-generator").deleteRecursively()
+
+                toFolder.walk().forEach { if (!it.name.endsWith(".ts")) it.delete() }
             }
             fromSchema.parentFile.exists() && project.name != "gateway" -> {
-                println("🔮 [OPEN API] Before run this task: 🧬 `npm i -g openapi-typescript`")
-                println("\t 2) you should have [$fromFilename] openapi file in 🧿 ${project.name}$fromLocation 🧿 and [${project.rootDir}$toFolder] folder")
+                println("🔮 [OPEN API] Before run this task: 🧬 install local `openapi-generator-cli`")
+                println("\t you should have [$fromFilename] openapi file in 🧿 ${project.name}$fromLocation 🧿 and [${project.rootDir}${this.toFolder}] folder")
                 System.err.println("\t 🧨 [${project.name}] 🧨 || Not found file: $fromFilename ($fromSchema)\n")
             }
-            else -> println("🕳 ok: [${project.name}] is not backend. So, nothing to create for this service.")
     } }
+
+
 }
 
-fun Project.registerTSOpenapiGeneratorTask() = tasks.register<OpenApiSchemaTs>("schema")
-val Project.schema: TaskProvider<OpenApiSchemaTs>
-    get() = tasks.named<OpenApiSchemaTs>("schema")
+fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosApiTs>("api")
+val Project.api: TaskProvider<OpenApiAxiosApiTs>
+    get() = tasks.named<OpenApiAxiosApiTs>("api")

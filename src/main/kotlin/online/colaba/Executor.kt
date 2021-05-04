@@ -8,6 +8,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
+import java.io.File
 
 open class Executor : Exec() {
     init { group = "help"; description = "Execute a command line process on local machine" }
@@ -21,6 +22,10 @@ open class Executor : Exec() {
             super.exec()
         }
     }
+
+    fun fromOpenApiScheme(from: String) = File("${project.rootDir}/${project.name}$from".normal())
+
+    fun String.normal() = normalizeForWindows().replace("${project.name}/${project.name}", project.name)
 }
 
 fun Project.registerExecutorTask() = tasks.register<Executor>("execute")
