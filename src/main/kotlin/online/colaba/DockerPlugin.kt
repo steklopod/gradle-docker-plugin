@@ -13,7 +13,7 @@ registerOpenApiAxiosApiTsTask()
 tasks {
     execute {  }
 
-    api {  }
+    apiGen {  }
 
     docker          {  }
     dockerComposeUp {  }

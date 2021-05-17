@@ -4,7 +4,7 @@ plugins {
 }
 
 val name = "docker"
-val pluginsVersion = "1.2.69"
+val pluginsVersion = "1.2.694"
 description = "Docker helper tasks"
 version = pluginsVersion
 group = "online.colaba"
@@ -20,6 +20,6 @@ pluginBundle {
             tags = listOf("docker", "deploy", "docker-compose")
             version = pluginsVersion
 } } }
-tasks { compileKotlin { kotlinOptions { jvmTarget = "15" } } }
+tasks { compileKotlin { kotlinOptions { jvmTarget = "16" } } }
 
 defaultTasks("clean", "build", "publishPlugins")

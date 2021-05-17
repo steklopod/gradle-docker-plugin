@@ -18,12 +18,10 @@ open class Executor : Exec() {
     @TaskAction override fun exec() {
         command?.run {
             println("\t 🪄 Executing local command: [ $this ] ... \n")
-            commandLine = windowsPrefix + this.split(" ").map { it.trim() }
+            commandLine = windowsPrefix + split(" ").map { it.trim() }
             super.exec()
         }
     }
-
-    fun fromOpenApiScheme(from: String) = File("${project.rootDir}/${project.name}$from".normal())
 
     fun String.normal() = normalizeForWindows().replace("${project.name}/${project.name}", project.name)
 }
