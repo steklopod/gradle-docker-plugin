@@ -9,12 +9,11 @@ class DockerPlugin : Plugin<Project> { override fun apply(project: Project): Uni
 description = "Docker needed tasks"
 
 registerDockerTask(); registerExecutorTask(); registerDockerComposeTask();
-registerTSOpenapiGeneratorTask(); registerOpenApiAxiosApiTsTask()
+registerOpenApiAxiosApiTsTask()
 tasks {
     execute {  }
 
-    api    {  }
-    schema {  }
+    api {  }
 
     docker          {  }
     dockerComposeUp {  }

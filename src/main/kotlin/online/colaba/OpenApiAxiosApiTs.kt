@@ -7,7 +7,6 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
 import java.io.File
-import java.nio.file.Files
 
 
 open class OpenApiAxiosApiTs : Executor() {
@@ -22,30 +21,51 @@ open class OpenApiAxiosApiTs : Executor() {
     @get:Input var toFolder   : String = "/frontend/types/api"
     @get:Input var toFilename : String = "schema-${project.name}"
 
-    @get:Input var addInfo    : String = "--generator-name typescript-axios --additional-properties=library=spring-boot"
+    @get:Input var generatorName : String  = "typescript-axios"
+    @get:Input var addInfo       : String = "library=spring-boot,beanValidations=true,swaggerAnnotations=true,supportsES6=true,withInterfaces=true"
+
+    @get:Input var onlyTS : Boolean = true
 
     @TaskAction fun run() {
-        val from = "$fromLocation/$fromFilename"
-        val fromSchema = fromOpenApiScheme(from)
-        val toFolder = File("${project.rootDir}/$toFolder".normal())
+        val from: File = fromOpenApiScheme("$fromLocation/$fromFilename")
+        val to = File("${project.rootDir}/$toFolder".normal())
 
         when {
-            fromSchema.exists() -> {
-                println("\t 🔪 [${project.name.toUpperCase()}] 🔫 Found schema: $fromFilename")
+            from.exists() -> {
+                println("\t 👉🏻 [${project.name.toUpperCase()}] 🔫 Found schema: $fromFilename")
+                println("📌 FROM: $from")
+                println("📌 TO: $to")
 
-                super.command = "openapi-generator-cli generate -i $fromSchema -o $toFolder $addInfo"
+                val generator = "--generator-name $generatorName "
+                val additional = "--additional-properties=$addInfo"
+                super.command = "openapi-generator-cli generate -i $from -o $to $generator $additional"
                 super.exec()
 
-                File("${project.rootDir}/${project.name}/Users").deleteRecursively() // fix empty folder creation
+                val fromSubprojectRoot = "${project.rootDir}/${project.name}"
 
-                File("$toFolder/.openapi-generator").deleteRecursively()
+                File("$fromSubprojectRoot/Users").deleteRecursively() // fix empty folder creation
+                println("🐻‍❄️ Removed: $fromSubprojectRoot")
 
-                toFolder.walk().forEach { if (!it.name.endsWith(".ts")) it.delete() }
+                File("$to/.openapi-generator").deleteRecursively()
+                println("🐻‍❄️ Removed: $to/.openapi-generator")
+
+                File("$fromSubprojectRoot/openapitools.json").delete()
+                println("🐻‍❄️ Removed: $fromSubprojectRoot/openapitools.json")
+
+                File("${project.rootDir}/openapitools.json").delete()
+
+                if(onlyTS) to.walk().forEach {
+                    if (!it.name.endsWith(".ts")) {
+                        it.delete()
+                        println("🐻‍❄️ Removed: $it")
+                    }
+                }
             }
-            fromSchema.parentFile.exists() && project.name != "gateway" -> {
+
+            from.parentFile.exists() && project.name != "gateway" -> {
                 println("🔮 [OPEN API] Before run this task: 🧬 install local `openapi-generator-cli`")
-                println("\t you should have [$fromFilename] openapi file in 🧿 ${project.name}$fromLocation 🧿 and [${project.rootDir}${this.toFolder}] folder")
-                System.err.println("\t 🧨 [${project.name}] 🧨 || Not found file: $fromFilename ($fromSchema)\n")
+                println("\t you should have [$fromFilename] openapi file in 🧿 ${project.name}$fromLocation 🧿 and [${project.rootDir}${toFolder}] folder")
+                System.err.println("\t 🧨 [${project.name}] 🧨 || Not found file: $fromFilename ($from)\n")
             }
     } }
 
