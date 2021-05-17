@@ -43,21 +43,24 @@ open class OpenApiAxiosApiTs : Executor() {
 
                 val fromSubprojectRoot = "${project.rootDir}/${project.name}"
 
-                File("$fromSubprojectRoot/Users").deleteRecursively() // fix empty folder creation
-                println("🐻‍❄️ Removed: $fromSubprojectRoot")
+                File("$fromSubprojectRoot/Users").deleteRecursively()
+                println("\n🕷 Removed: ${project.name}/Users")
 
                 File("$to/.openapi-generator").deleteRecursively()
-                println("🐻‍❄️ Removed: $to/.openapi-generator")
+                println("🕷 Removed: $to/.openapi-generator")
 
-                File("$fromSubprojectRoot/openapitools.json").delete()
-                println("🐻‍❄️ Removed: $fromSubprojectRoot/openapitools.json")
+                "openapitools.json".run {
+                    File("$fromSubprojectRoot/$this").delete()
+                    println("🕷 Removed: ${project.name}/$this")
 
-                File("${project.rootDir}/openapitools.json").delete()
+                    File("${project.rootDir}/$this").delete()
+                    println("🕷 Removed: ${project.name}/$this \n")
+                }
 
-                if(onlyTS) to.walk().forEach {
-                    if (!it.name.endsWith(".ts")) {
+                if (onlyTS) to.walk().forEach {
+                    if (it.isFile && !it.name.endsWith(".ts")) {
                         it.delete()
-                        println("🐻‍❄️ Removed: $it")
+                        println("🕷 Removed: ${it.toString().substringAfter(project.rootDir.toString())}")
                     }
                 }
             }
