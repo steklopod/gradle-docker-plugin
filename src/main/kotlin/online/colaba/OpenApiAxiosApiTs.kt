@@ -18,18 +18,21 @@ open class OpenApiAxiosApiTs : Executor() {
     @get:Input var fromLocation : String = "/src/test/resources"
     @get:Input var fromFilename : String = "docs.yaml"
 
-    @get:Input var toFolder   : String = "/frontend/types/api"
+    @get:Input var toFolder   : String = "/frontend/api/${project.name}"
     @get:Input var toFilename : String = "schema-${project.name}"
 
     @get:Input var generatorName : String  = "typescript-axios"
-    @get:Input var addInfo       : String = "library=spring-boot,swaggerAnnotations=true,supportsES6=true,withInterfaces=true"
+    @get:Input var addInfo       : String = "library=spring-boot,swaggerAnnotations=true,supportsES6=true,withInterfaces=true,serviceImplementation=true,enumPropertyNaming=UPPERCASE"
 
     @get:Input var deleteNotTSFiles : Boolean = true
+    @get:Input var separateModels : Boolean = true
+
 
 
     @TaskAction fun run() {
-    val from = File("${project.rootDir}/${project.name}$fromLocation/$fromFilename")
+    if(separateModels) addInfo+=",withSeparateModelsAndApi=true,enablePostProcessFile=true,modelPackage=models,apiPackage=controllers"
 
+    val from = File("${project.rootDir}/${project.name}$fromLocation/$fromFilename")
     val to = File("${project.rootDir}/$toFolder")
 
     if (from.exists()) {

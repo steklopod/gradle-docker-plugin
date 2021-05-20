@@ -4,7 +4,7 @@ plugins {
 }
 
 val name = "docker"
-val pluginsVersion = "1.2.694"
+val pluginsVersion = "1.2.698"
 description = "Docker helper tasks"
 version = pluginsVersion
 group = "online.colaba"
