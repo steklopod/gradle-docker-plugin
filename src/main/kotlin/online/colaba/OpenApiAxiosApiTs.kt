@@ -12,11 +12,11 @@ import java.io.File
 open class OpenApiAxiosApiTs : Executor() {
     init {
         group = "$dockerPrefix-${project.name}"
-        description = "Generating [ TypeScript Axios API] from OPEN API docs.yaml."
+        description = "Generating [ TypeScript Axios API] OPEN API."
     }
 
     @get:Input var fromLocation : String = "/src/test/resources"
-    @get:Input var fromFilename : String = "docs.yaml"
+    @get:Input var fromFilename : String = "openapi.json"
 
     @get:Input var toFolder   : String = "/frontend/api/${project.name}"
     @get:Input var toFilename : String = "schema-${project.name}"
@@ -28,11 +28,10 @@ open class OpenApiAxiosApiTs : Executor() {
     @get:Input var separateModels : Boolean = true
 
 
-
     @TaskAction fun run() {
     if(separateModels) addInfo+=",withSeparateModelsAndApi=true,enablePostProcessFile=true,modelPackage=models,apiPackage=controllers"
 
-    val from = File("${project.rootDir}/${project.name}$fromLocation/$fromFilename")
+    val from = File("${project.projectDir}$fromLocation/$fromFilename")
     val to = File("${project.rootDir}/$toFolder")
 
     if (from.exists()) {
@@ -48,7 +47,7 @@ open class OpenApiAxiosApiTs : Executor() {
 
         println("🪲 Start deleting unnecessary files...")
 
-        val fromSubprojectRoot = "${project.rootDir}/${project.name}"
+        val fromSubprojectRoot = "${project.projectDir}"
 
         File("$fromSubprojectRoot/Users").deleteRecursively()
         println("\n🕷 Removed: ${project.name}/Users")
@@ -71,9 +70,9 @@ open class OpenApiAxiosApiTs : Executor() {
             }
         }
     } else if (from.parentFile.exists() && project.name != "gateway") {
+        System.err.println("\t 🧨 [${project.name}] 🧨 | NOT FOUND FILE: 👻 $fromFilename ($from)\n")
         println("🔮 [OPEN API] Before run this task: 🧬 install local `openapi-generator-cli`")
-        println("\t you should have [$fromFilename] openapi file in 🧿 ${project.name}$fromLocation 🧿 and [${project.rootDir}${toFolder}] folder")
-        System.err.println("\t 🧨 [${project.name}] 🧨 || Not found file: $fromFilename ($from)\n")
+        println("\t\t you should have [$fromFilename] openapi file in 🧿 ${project.name}$fromLocation 🧿 and [${project.rootDir}${toFolder}] folder")
     }
   }
 }

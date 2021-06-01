@@ -1,10 +1,10 @@
 plugins {
     `kotlin-dsl`
-    id("com.gradle.plugin-publish") version "0.13.0"
+    id("com.gradle.plugin-publish") version "0.15.0"
 }
 
 val name = "docker"
-val pluginsVersion = "1.2.698"
+val pluginsVersion = "1.2.7"
 description = "Docker helper tasks"
 version = pluginsVersion
 group = "online.colaba"
