@@ -1,13 +1,15 @@
 plugins {
     `kotlin-dsl`
-    id("com.gradle.plugin-publish") version "0.15.0"
+    id("org.sonarqube") version "3.3"
+    id("com.gradle.plugin-publish") version "0.16.0"
+    id("com.github.ben-manes.versions") version "0.39.0"
 }
 
 val name = "docker"
-val pluginsVersion = "1.2.7"
+val pluginsVersion = "1.2.81"
 description = "Docker helper tasks"
-version = pluginsVersion
 group = "online.colaba"
+version = pluginsVersion
 repositories { mavenLocal(); mavenCentral() }
 gradlePlugin { plugins { create(name) {
     id = "$group.$name"; implementationClass = "$group.DockerPlugin"; description = "Docker needed tasks"
@@ -16,10 +18,10 @@ pluginBundle {
     website = "https://github.com/steklopod/gradle-docker-plugin"
     vcsUrl = "https://github.com/steklopod/gradle-docker-plugin.git"
     (plugins) { name {
-            displayName = "Docker needed tasks."
+            displayName = "Docker & docker-compose tasks. Bonus: `openapi-generator-cli generate`  java spring --> axios type script"
             tags = listOf("docker", "deploy", "docker-compose")
             version = pluginsVersion
 } } }
-tasks { compileKotlin { kotlinOptions { jvmTarget = "16" } } }
+tasks { compileKotlin { kotlinOptions { jvmTarget = "17" } } }
 
 defaultTasks("clean", "build", "publishPlugins")

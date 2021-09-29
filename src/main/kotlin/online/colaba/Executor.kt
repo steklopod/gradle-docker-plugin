@@ -8,7 +8,6 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
-import java.io.File
 
 open class Executor : Exec() {
     init { group = "help"; description = "Execute a command line process on local machine" }
@@ -18,12 +17,16 @@ open class Executor : Exec() {
     @TaskAction override fun exec() {
         command?.run {
             println("\t 🪄 Executing local command: [ $this ] ... \n")
-            commandLine = windowsPrefix + split(" ").map { it.trim() }
+            val prefix = cliPrefix()
+            commandLine = prefix + split(" ").map { it.trim() }
             super.exec()
         }
     }
 
-    fun String.normal() = normalizeForWindows().replace("${project.name}/${project.name}", project.name)
+    private fun cliPrefix(): List<String> {
+        val isWindows = System.getProperty("os.name").contains("windows")
+        return if (isWindows) listOf("cmd", "/c") else listOf()
+    }
 }
 
 fun Project.registerExecutorTask() = tasks.register<Executor>("execute")

@@ -9,7 +9,7 @@ import org.gradle.kotlin.dsl.register
 import java.io.File
 
 
-open class OpenApiAxiosApiTs : Executor() {
+open class OpenApiAxiosTypeScript : Executor() {
     init {
         group = "$dockerPrefix-${project.name}"
         description = "Generating [ TypeScript Axios API] OPEN API."
@@ -77,6 +77,6 @@ open class OpenApiAxiosApiTs : Executor() {
   }
 }
 
-fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosApiTs>("apiGen")
-val Project.apiGen: TaskProvider<OpenApiAxiosApiTs>
-    get() = tasks.named<OpenApiAxiosApiTs>("apiGen")
+fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosTypeScript>("apiGen")
+val Project.apiGen: TaskProvider<OpenApiAxiosTypeScript>
+    get() = tasks.named<OpenApiAxiosTypeScript>("apiGen")
