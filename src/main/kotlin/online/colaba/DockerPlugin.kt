@@ -9,18 +9,21 @@ import org.gradle.kotlin.dsl.registering
 
 class DockerPlugin : Plugin<Project> { override fun apply(project: Project): Unit = project.run {
 
-description = "Docker needed tasks"
+description = "Easy deploy with docker. And TypeScript generator with axios"
+
+registerOpenApiAxiosApiTsTask()
 
 tasks {
-    registerExecutorTask(); registerDockerTask(); registerDockerComposeTask()
-    execute {  }          ; docker {  }         ; dockerComposeUp {  }
+    registerExecutorTask(); registerDockerTask(); registerDockerComposeTask();
+    execute {  }          ; docker {  }         ; dockerComposeUp {  }       ;
+
 
     val logs by registering(Docker::class) { exec = "logs ${project.name}"; description = "Print logs of current docker container" }
 
     val deploy    by registering(ComposeDocker::class){ finalizedBy(logs); description = "Docker compose up (default with recreate & rebuild)" }
     val deployDev by registering(ComposeDocker::class){ finalizedBy(logs); isDev = true; description = "Docker compose up from `docker-compose.dev.yml` file" }
 
-    val stop   by registering(Docker::class) { exec = "stop ${project.name}"; description = "Stop docker container" }
+    val stop   by registering(ComposeDocker::class) { exec = "down ${project.name}"; recreate= false; description = "Stop docker container" }
     val remove by registering(Docker::class) {
         dependsOn(stop)
         exec = "rm -f ${project.name}"

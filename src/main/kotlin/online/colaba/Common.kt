@@ -13,7 +13,9 @@ fun Project.localExists(directory: String): Boolean = File("$rootDir/$directory"
 fun Project.isJava() = localExists("src/main") || localExists("build/libs")
 fun Project.isSpringBoot(): Boolean =  isJava()
         && !name.endsWith("lib") && !name.contains("front")
-        && !setOf("postgres", "db", "static", "broker").contains(name)
-fun Project.isService(): Boolean =  isSpringBoot()
-        && !setOf("mail", "gateway", "eureka-server", "eureka", "discovery").contains(name)
-    .apply { println("Project [$name] isService: $this") }
+        && !setOf("static", "frontend", "postgres", "nginx", "elastic", "static", "broker", "redis").contains(name)
+fun Project.isWebService(): Boolean = isSpringBoot()
+        && !setOf(/* "mail", */ "gateway").contains(name)
+        && !name.endsWith("-server")
+        && !name.endsWith("-lib")
+    .apply { if (this) println("💬 Project [${name.toUpperCase()}] is WEB service. OpenApi generator will be added.") }

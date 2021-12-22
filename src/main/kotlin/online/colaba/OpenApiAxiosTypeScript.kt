@@ -22,14 +22,30 @@ open class OpenApiAxiosTypeScript : Executor() {
     @get:Input var toFilename : String = "schema-${project.name}"
 
     @get:Input var generatorName : String  = "typescript-axios"
-    @get:Input var addInfo       : String = "library=spring-boot,swaggerAnnotations=true,supportsES6=true,withInterfaces=true,serviceImplementation=true,enumPropertyNaming=UPPERCASE"
 
+    @get:Input var addInfo : Set<String> = setOf(
+        "library=spring-boot",
+        "swaggerAnnotations=true",
+        "supportsES6=true",
+        "withInterfaces=true",
+        "serviceImplementation=true",
+        "nullSafeAdditionalProps=true",
+        "enumPropertyNaming=UPPERCASE",
+        "typescriptThreePlus=true"
+    )
     @get:Input var deleteNotTSFiles : Boolean = true
+
     @get:Input var separateModels : Boolean = true
+    @get:Input var apiPackage     : String  = "controllers"
+    @get:Input var modelPackage   : String  = "models"
+
+    @get:Input var enablePostProcessFile : Boolean = false
 
 
     @TaskAction fun run() {
-    if(separateModels) addInfo+=",withSeparateModelsAndApi=true,enablePostProcessFile=true,modelPackage=models,apiPackage=controllers"
+    var arguments = addInfo.joinToString(",")
+    if(separateModels) arguments += ",withSeparateModelsAndApi=true,modelPackage=$modelPackage,apiPackage=$apiPackage"
+    if(enablePostProcessFile) arguments += ",enablePostProcessFile=true"
 
     val from = File("${project.projectDir}$fromLocation/$fromFilename")
     val to = File("${project.rootDir}/$toFolder")
@@ -40,7 +56,7 @@ open class OpenApiAxiosTypeScript : Executor() {
         println("📌 TO: $toFolder")
 
         val generator = "--generator-name $generatorName"
-        val additional = "--additional-properties=$addInfo"
+        val additional = "--additional-properties=$arguments"
 
         command = "openapi-generator-cli generate -i $from -o $to $generator $additional"
         exec()
@@ -77,6 +93,10 @@ open class OpenApiAxiosTypeScript : Executor() {
   }
 }
 
-fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosTypeScript>("apiGen")
+fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosTypeScript>("apiGen"){
+    if (tasks.findByName("generateOpenApiDocs") != null) dependsOn(tasks.named("generateOpenApiDocs")) // <--- TODO
+}
 val Project.apiGen: TaskProvider<OpenApiAxiosTypeScript>
-    get() = tasks.named<OpenApiAxiosTypeScript>("apiGen")
+    get() = tasks.named<OpenApiAxiosTypeScript>("apiGen"){
+        description = "Generate TypeScript frontend with Axios generator"
+    }
