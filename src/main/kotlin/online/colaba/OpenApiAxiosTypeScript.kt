@@ -51,6 +51,7 @@ open class OpenApiAxiosTypeScript : Executor() {
     val to = File("${project.rootDir}/$toFolder")
 
     if (from.exists()) {
+        from.delete()
         println("\t 👉🏻 [${project.name.toUpperCase()}] 🔫 Found schema: $fromFilename")
         println("📌 FROM: $fromLocation/$fromFilename")
         println("📌 TO: $toFolder")
