@@ -11,7 +11,7 @@ class DockerPlugin : Plugin<Project> { override fun apply(project: Project): Uni
 
 description = "Easy deploy with docker. And TypeScript generator with axios"
 
-registerOpenApiAxiosApiTsTask()
+registerOpenApiAxiosApiTsTask(); registerOpenApiFetchApiTsTask();
 
 tasks {
     registerExecutorTask(); registerDockerTask(); registerDockerComposeTask();

@@ -9,19 +9,19 @@ import org.gradle.kotlin.dsl.register
 import java.io.File
 
 
-open class OpenApiAxiosTypeScript : Executor() {
+open class OpenApiFetchTypeScript : Executor() {
     init {
         group = "$dockerPrefix-${project.name}"
-        description = "Generating [ TypeScript Axios API] OPEN API."
+        description = "Generating [ TypeScript Fetch API] OPEN API."
     }
 
     @get:Input var fromLocation : String = "/src/test/resources"
     @get:Input var fromFilename : String = "openapi.json"
 
-    @get:Input var toFolder   : String = "/frontend/api/${project.name}"
+    @get:Input var toFolder   : String = "/frontend/api/fetch/${project.name}"
     @get:Input var toFilename : String = "schema-${project.name}"
 
-    @get:Input var generatorName : String  = "typescript-axios"
+    @get:Input var generatorName : String  = "typescript-fetch"
 
     @get:Input var addInfo : Set<String> = setOf(
         "library=spring-boot",
@@ -94,11 +94,11 @@ open class OpenApiAxiosTypeScript : Executor() {
   }
 }
 
-fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosTypeScript>("apiGen"){
+fun Project.registerOpenApiFetchApiTsTask() = tasks.register<OpenApiFetchTypeScript>("fetchGen"){
     tasks.findByName("generateOpenApiDocs")?.let { dependsOn(it) }
 }
 
-val Project.apiGen: TaskProvider<OpenApiAxiosTypeScript>
-    get() = tasks.named<OpenApiAxiosTypeScript>("apiGen"){
-        description = "Generate TypeScript frontend with Axios generator"
+val Project.fetchGen: TaskProvider<OpenApiFetchTypeScript>
+    get() = tasks.named<OpenApiFetchTypeScript>("fetchGen"){
+        description = "Generate TypeScript frontend with Fetch generator"
     }

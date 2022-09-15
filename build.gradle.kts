@@ -5,7 +5,7 @@ plugins {
 //    id("com.github.ben-manes.versions") version "0.42.0"
 }
 
-val pluginsVersion = "1.2.99"
+val pluginsVersion = "1.3.0"
 version = pluginsVersion
 group = "online.colaba"
 description = "Docker helper tasks 🐳"
