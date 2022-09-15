@@ -12,12 +12,9 @@ class DockerPlugin : Plugin<Project> { override fun apply(project: Project): Uni
 description = "Easy deploy with docker. And TypeScript generator with axios"
 
 registerOpenApiAxiosApiTsTask()
-registerOpenApiFetchApiTsTask()
 
 tasks {
     registerExecutorTask(); registerDockerTask(); registerDockerComposeTask();
-    execute {  }          ; docker {  }         ; dockerComposeUp {  }       ;
-
 
     val logs by registering(Docker::class) { exec = "logs ${project.name}"; description = "Print logs of current docker container" }
 
@@ -33,4 +30,5 @@ tasks {
 
     register("recompose") { dependsOn(remove); finalizedBy(deploy); description = "Compose up after removing current docker service" }
     register("recomposeDev") { dependsOn(remove); finalizedBy(deployDev); description = "Compose up from `docker-compose.dev.yml` file after removing current docker service" }
+
 } } }

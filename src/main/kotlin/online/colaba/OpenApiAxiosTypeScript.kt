@@ -51,7 +51,7 @@ open class OpenApiAxiosTypeScript : Executor() {
     val to = File("${project.rootDir}/$toFolder")
 
     if (from.exists()) {
-        from.delete()
+//        from.delete()
         println("\t 👉🏻 [${project.name.toUpperCase()}] 🔫 Found schema: $fromFilename")
         println("📌 FROM: $fromLocation/$fromFilename")
         println("📌 TO: $toFolder")
@@ -95,8 +95,12 @@ open class OpenApiAxiosTypeScript : Executor() {
 }
 
 fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosTypeScript>("apiGen"){
-    if (tasks.findByName("generateOpenApiDocs") != null) dependsOn(tasks.named("generateOpenApiDocs")) // <--- TODO
+    tasks.findByName("generateOpenApiDocs")?.let {
+        dependsOn(it)
+        println("📝 Registered running task before `apiGen`: generating openapi spec with `generateOpenApiDocs` ")
+    }
 }
+
 val Project.apiGen: TaskProvider<OpenApiAxiosTypeScript>
     get() = tasks.named<OpenApiAxiosTypeScript>("apiGen"){
         description = "Generate TypeScript frontend with Axios generator"
