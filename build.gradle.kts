@@ -1,11 +1,11 @@
 plugins {
-//    `kotlin-dsl`
-    id("org.gradle.kotlin.kotlin-dsl") version "3.1.0"
-    id("com.gradle.plugin-publish") version "1.0.0"
-//    id("com.github.ben-manes.versions") version "0.42.0"
+    `kotlin-dsl`
+//    id("org.gradle.kotlin.kotlin-dsl") version "3.1.0"
+    id("com.gradle.plugin-publish") version "1.1.0"
+    id("com.github.ben-manes.versions") version "0.44.0"
 }
 
-val pluginsVersion = "1.3.0"
+val pluginsVersion = "1.3.1"
 version = pluginsVersion
 group = "online.colaba"
 description = "Docker helper tasks 🐳"
@@ -23,3 +23,8 @@ pluginBundle {
 }
 
 defaultTasks("clean", "build", "publishPlugins")
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
