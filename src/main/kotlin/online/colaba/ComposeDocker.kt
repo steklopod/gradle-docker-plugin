@@ -31,12 +31,16 @@ open class ComposeDocker : Executor() {
     @get:Input
     var isDev: Boolean = false
 
+    @get:Input
+    var isInfra: Boolean = false
+
     @TaskAction
     override fun exec() {
         val recreateFlags = "--detach --build --force-recreate"
         val dockerComposedevFile = "docker-compose.dev.yml"
 
         if (isDev) composeFile = dockerComposedevFile
+        if (isInfra) composeFile = dockerComposedevFile.replace("dev", "infra")
 
         composeFile?.let { exec = "-f $composeFile up " }
 
