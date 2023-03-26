@@ -11,15 +11,15 @@ class DockerPlugin : Plugin<Project> { override fun apply(project: Project): Uni
 
 description = "Easy deploy with docker. And TypeScript generator with axios"
 
-registerOpenApiAxiosApiTsTask(); registerOpenApiFetchApiTsTask();
 
 tasks {
-    registerExecutorTask(); registerDockerTask(); registerDockerComposeTask();
+    registerOpenApiAxiosApiTsTask(); registerOpenApiFetchApiTsTask(); registerExecutorTask(); registerDockerTask(); registerDockerComposeTask();
+    apiGen{ }
 
     val logs by registering(Docker::class) { exec = "logs ${project.name}"; description = "Print logs of current docker container" }
 
-    val deploy    by registering(ComposeDocker::class){ finalizedBy(logs); description = "Docker compose up (default with recreate & rebuild)" }
-    val deployDev by registering(ComposeDocker::class){ finalizedBy(logs); isDev = true; description = "Docker compose up from `docker-compose.DEV.yml` file" }
+    val deploy      by registering(ComposeDocker::class){ finalizedBy(logs); description = "Docker compose up (default with recreate & rebuild)" }
+    val deployDev   by registering(ComposeDocker::class){ finalizedBy(logs); isDev = true; description = "Docker compose up from `docker-compose.DEV.yml` file" }
     val deployInfra by registering(ComposeDocker::class){ finalizedBy(logs); isInfra = true; description = "Docker compose up from `docker-compose.INFRA.yml` file" }
 
     val stop   by registering(ComposeDocker::class) { exec = "down ${project.name}"; recreate= false; description = "Stop docker container" }

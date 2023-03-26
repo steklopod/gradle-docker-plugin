@@ -73,11 +73,8 @@ open class OpenApiAxiosTypeScript : Executor() {
         println("🕷 Removed: $to/.openapi-generator")
 
         "openapitools.json".run {
-            File("$fromSubprojectRoot/$this").delete()
-            println("🕷 Removed: ${project.name}/$this")
-
-            File("${project.rootDir}/$this").delete()
-            println("🕷 Removed: ${project.name}/$this \n")
+            if(File("$fromSubprojectRoot/$this").delete()) println("🕷 Removed: ${project.name}/$this")
+            if(File("${project.rootDir}/$this").delete())  println("🕷 Removed: ${project.name}/$this \n")
         }
 
         if (deleteNotTSFiles) to.walk().forEach {
@@ -90,15 +87,22 @@ open class OpenApiAxiosTypeScript : Executor() {
         System.err.println("\t 🧨 [${project.name}] 🧨 | NOT FOUND FILE: 👻 $fromFilename ($from)\n")
         println("🔮 [OPEN API] Before run this task: 🧬 install local `openapi-generator-cli`")
         println("\t\t you should have [$fromFilename] openapi file in 🧿 ${project.name}$fromLocation 🧿 and [${project.rootDir}${toFolder}] folder")
+        System.err.println("\t\t⭕️ Maybe `generateOpenApiDocs` was not attached. Please try to run: ➡️ `gradle generateOpenApiDocs` ⬅️ first")
     }
   }
 }
 
-fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosTypeScript>("apiGen"){
-    tasks.findByName("generateOpenApiDocs")?.let { dependsOn(it) }
+fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosTypeScript>("apiGen") {
+    description = "Generate TypeScript frontend with Axios generator"
+
+    val generateOpenApiDocs = tasks.findByName("generateOpenApiDocs")
+    if (generateOpenApiDocs == null) System.err.println("⭕️ `generateOpenApiDocs` was not attached to `apiGen` task! You need to run: ➡ `gradle generateOpenApiDocs` ⬅ first")
+    else {
+        mustRunAfter(generateOpenApiDocs)
+        dependsOn(generateOpenApiDocs)
+        println("📝 Registered running task before `apiGen`: generating openapi spec with `generateOpenApiDocs` ")
+    }
 }
 
 val Project.apiGen: TaskProvider<OpenApiAxiosTypeScript>
-    get() = tasks.named<OpenApiAxiosTypeScript>("apiGen"){
-        description = "Generate TypeScript frontend with Axios generator"
-    }
+    get() = tasks.named<OpenApiAxiosTypeScript>("apiGen")
