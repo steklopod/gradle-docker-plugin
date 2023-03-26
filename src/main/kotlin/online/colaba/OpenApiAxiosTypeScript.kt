@@ -79,8 +79,7 @@ open class OpenApiAxiosTypeScript : Executor() {
 
         if (deleteNotTSFiles) to.walk().forEach {
             if (it.isFile && !it.name.endsWith(".ts")) {
-                it.delete()
-                println("🕷 Removed: ${it.toString().substringAfter(project.rootDir.toString())}")
+                if(it.delete()) println("🕷 Removed: ${it.toString().substringAfter(project.rootDir.toString())}")
             }
         }
     } else if (from.parentFile.exists() && project.name != "gateway") {
@@ -94,13 +93,9 @@ open class OpenApiAxiosTypeScript : Executor() {
 
 fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosTypeScript>("apiGen") {
     description = "Generate TypeScript frontend with Axios generator"
-
-    val generateOpenApiDocs = tasks.findByName("generateOpenApiDocs")
-    if (generateOpenApiDocs == null) System.err.println("⭕️ `generateOpenApiDocs` was not attached to `apiGen` task! You need to run: ➡ `gradle generateOpenApiDocs` ⬅ first")
-    else {
-        mustRunAfter(generateOpenApiDocs)
-        dependsOn(generateOpenApiDocs)
-        println("📝 Registered running task before `apiGen`: generating openapi spec with `generateOpenApiDocs` ")
+    tasks.findByName("generateOpenApiDocs")?.let{
+        mustRunAfter(it)
+        dependsOn(it)
     }
 }
 
