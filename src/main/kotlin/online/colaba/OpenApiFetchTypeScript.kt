@@ -24,7 +24,6 @@ open class OpenApiFetchTypeScript : Executor() {
     @get:Input var generatorName : String  = "typescript-fetch"
 
     @get:Input var addInfo : Set<String> = setOf(
-        "library=spring-boot",
         "swaggerAnnotations=true",
         "supportsES6=true",
         "withInterfaces=true",

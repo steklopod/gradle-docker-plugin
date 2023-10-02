@@ -18,7 +18,7 @@
 
 ```kotlin
 plugins {
-     id("online.colaba.docker") version "1.3.5"
+     id("online.colaba.docker") version "1.3.6"
 }
 ```
 
