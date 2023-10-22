@@ -26,11 +26,11 @@ open class OpenApiAxiosTypeScript : Executor() {
     @get:Input var addInfo : Set<String> = setOf(
         "swaggerAnnotations=true",
         "supportsES6=true",
-        "withInterfaces=true",
         "serviceImplementation=true",
         "nullSafeAdditionalProps=true",
         "enumPropertyNaming=UPPERCASE",
-        "typescriptThreePlus=true"
+        "typescriptThreePlus=true",
+        "legacyDiscriminatorBehavior=false",
     )
     @get:Input var deleteNotTSFiles : Boolean = true
 
