@@ -4,7 +4,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.50.0"
 }
 
-val pluginsVersion = "1.3.10"
+val pluginsVersion = "1.4.0"
 version = pluginsVersion
 group = "online.colaba"
 description = "Docker helper tasks 🐳"
@@ -22,5 +22,6 @@ gradlePlugin { plugins { create(name) {
 
 defaultTasks("clean", "build", "publishPlugins")
 
-kotlin { jvmToolchain(17) }
-java { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
+kotlin { jvmToolchain(21) }
+java { toolchain { languageVersion.set(JavaLanguageVersion.of(21)) } }
+
