@@ -14,7 +14,7 @@ description = "Easy deploy with docker. And TypeScript generator with axios"
 
 tasks {
     registerOpenApiAxiosApiTsTask(); registerOpenApiFetchApiTsTask();
-    registerExecutorTask(); registerDockerTask(); registerDockerComposeTask();
+    registerDockerTask(); registerDockerComposeTask();
 
     val logs by registering(Docker::class) { exec = "logs ${project.name}"; description = "Print logs of current docker container" }
 

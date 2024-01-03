@@ -50,16 +50,15 @@ open class OpenApiAxiosTypeScript : Executor() {
     val to = File("${project.rootDir}/$toFolder")
 
     if (from.exists()) {
-//        from.delete()
-        println("\t 👉🏻 [${project.name.toUpperCase()}] 🔫 Found schema: $fromFilename")
+        println("👉🏻 [${project.name.toUpperCase()}] 🔫 Found schema: $fromFilename\n")
         println("📌 FROM: $fromLocation/$fromFilename")
         println("📌 TO: $toFolder")
 
         val generator = "--generator-name $generatorName"
         val additional = "--additional-properties=$arguments"
 
-        command = "openapi-generator-cli generate -i $from -o $to $generator $additional"
-        exec()
+        super.command = "openapi-generator-cli generate -i $from -o $to $generator $additional"
+        super.exec()
 
         println("🪲 Start deleting unnecessary files...")
 

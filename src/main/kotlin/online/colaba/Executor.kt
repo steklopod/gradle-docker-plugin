@@ -16,9 +16,9 @@ open class Executor : Exec() {
 
     @TaskAction override fun exec() {
         command?.run {
-            println("\t 🪄 Executing local command: [ $this ] ... \n")
+            println("\n 🪄✨ Executing local command: \n $this \n")
             val prefix = cliPrefix()
-            commandLine = prefix + split(" ").map { it.trim() }
+            commandLine = (prefix + split(" ").map(String::trim)).filter(String::isNotBlank)
             super.exec()
         }
     }
@@ -29,6 +29,8 @@ open class Executor : Exec() {
     }
 }
 
+/*
 fun Project.registerExecutorTask() = tasks.register<Executor>("execute")
 val Project.execute: TaskProvider<Executor>
     get() = tasks.named<Executor>("execute")
+*/
