@@ -1,10 +1,10 @@
 plugins {
     `kotlin-dsl`
-    id("com.gradle.plugin-publish") version "1.2.1"
-    id("com.github.ben-manes.versions") version "0.50.0"
+    id("com.gradle.plugin-publish") version "1.3.0"
+    id("com.github.ben-manes.versions") version "0.51.0"
 }
 
-val pluginsVersion = "1.4.1"
+val pluginsVersion = "1.4.3"
 version = pluginsVersion
 group = "online.colaba"
 description = "Docker helper tasks 🐳"
@@ -23,5 +23,4 @@ gradlePlugin { plugins { create(name) {
 defaultTasks("clean", "build", "publishPlugins")
 
 kotlin { jvmToolchain(21) }
-java { toolchain { languageVersion.set(JavaLanguageVersion.of(21)) } }
 
