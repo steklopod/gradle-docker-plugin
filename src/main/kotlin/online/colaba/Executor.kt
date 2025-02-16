@@ -1,13 +1,9 @@
 package online.colaba
 
-import org.gradle.api.Project
 import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
-import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.register
 
 open class Executor : Exec() {
     init { group = "help"; description = "Execute a command line process on local machine" }

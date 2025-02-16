@@ -7,14 +7,13 @@ import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.registering
 
-class DockerPlugin : Plugin<Project> { override fun apply(project: Project): Unit = project.run {
+class TasksRegistrator : Plugin<Project> { override fun apply(project: Project): Unit = project.run {
 
-description = "Easy deploy with docker. And TypeScript generator with axios"
-
+description = "Easy deploy with docker. And TypeScript code generator with axios from OpenApi spec"
 
 tasks {
-    registerOpenApiAxiosApiTsTask(); registerOpenApiFetchApiTsTask();
-    registerDockerTask(); registerDockerComposeTask();
+    registerOpenApiAxiosApiTsTask()
+    registerDockerTask(); registerDockerComposeTask()
 
     val logs by registering(Docker::class) { exec = "logs ${project.name}"; description = "Print logs of current docker container" }
 
