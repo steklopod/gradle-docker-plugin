@@ -18,4 +18,4 @@ fun Project.isWebService(): Boolean = isSpringBoot()
         && !setOf(/* "mail", */ "gateway").contains(name)
         && !name.endsWith("-server")
         && !name.endsWith("-lib")
-    .apply { if (this) println("💬 Project [${name.toUpperCase()}] is WEB service. OpenApi generator will be added.") }
+    .apply { if (this) println("💬 Project [${name}] is WEB service. OpenApi generator will be added.") }
