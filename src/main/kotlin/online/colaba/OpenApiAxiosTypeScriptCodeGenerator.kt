@@ -157,22 +157,17 @@ open class OpenApiAxiosTypeScriptCodeGenerator : Executor() {
 
     private fun printStartHeader() {
         println()
-        println("╔════════════════════════════════════════════════════════════════╗")
-        println("║               🔧 TYPESCRIPT API CODE GENERATION                ║")
-        println("╠════════════════════════════════════════════════════════════════╣")
-        println("║                                                                ║")
-        println("║  📂 Project:     ${project.name.padEnd(45)} ║")
-        println("║  📄 Schema:      ${fromFilename.padEnd(45)} ║")
-        println("║  🎯 Target:      ${generatorName.padEnd(45)} ║")
-        println("║                                                                ║")
-        println("║  📥 Source:      ${("${project.name}$fromLocation/$fromFilename").take(43).padEnd(43)} ║")
-        println("║  📤 Output:      ${toFolder.take(43).padEnd(43)} ║")
-        println("║                                                                ║")
-        println("║  🔧 Models:      ${(if (separateModels) "$modelPackage package" else "Inline models").padEnd(43)} ║")
-        println("║  🎮 APIs:        ${apiPackage.padEnd(43)} ║")
-        println("║  🧹 Cleanup:     ${(if (deleteNotTSFiles) "Enabled" else "Disabled").padEnd(43)} ║")
-        println("║                                                                ║")
-        println("╚════════════════════════════════════════════════════════════════╝")
+        println("┌─────────────────────────────────────────────────────────────────┐")
+        println("│            🔧 TYPESCRIPT API CODE GENERATION                    │")
+        println("└─────────────────────────────────────────────────────────────────┘")
+        println("📂 Project: ${project.name}")
+        println("📄 Schema: $fromFilename")
+        println("🎯 Target: $generatorName")
+        println("📥 Source: ${project.name}$fromLocation/$fromFilename")
+        println("📤 Output: $toFolder")
+        println("🔧 Models: ${if (separateModels) "$modelPackage package" else "Inline models"}")
+        println("🎮 APIs: $apiPackage")
+        println("🧹 Cleanup: ${if (deleteNotTSFiles) "Enabled" else "Disabled"}")
         println()
         println("🚀 Starting code generation...")
         println()
@@ -180,48 +175,39 @@ open class OpenApiAxiosTypeScriptCodeGenerator : Executor() {
 
     private fun printSuccessFooter(generationTime: Long, cleanupTime: Long, totalTime: Long, cleanupStats: CleanupStats) {
         println()
-        println("╔════════════════════════════════════════════════════════════════╗")
-        println("║                    ✨ GENERATION COMPLETED                      ║")
-        println("╠════════════════════════════════════════════════════════════════╣")
-        println("║                                                                ║")
-        println("║  ⏱️  Generation Time: ${formatDuration(generationTime).padEnd(36)} ║")
-        println("║  🧹 Cleanup Time:    ${formatDuration(cleanupTime).padEnd(37)} ║")
-        println("║  🎯 Total Time:      ${formatDuration(totalTime).padEnd(37)} ║")
-        println("║                                                                ║")
-        println("║  📁 Files Removed:   ${cleanupStats.filesRemoved.toString().padEnd(37)} ║")
-        println("║  🗂️  Dirs Removed:    ${cleanupStats.dirsRemoved.toString().padEnd(36)} ║")
-        println("║  📦 Size Freed:      ${formatBytes(cleanupStats.bytesFreed).padEnd(37)} ║")
-        println("║                                                                ║")
-        println("╚════════════════════════════════════════════════════════════════╝")
+        println("┌─────────────────────────────────────────────────────────────────┐")
+        println("│                   ✨ GENERATION COMPLETED                        │")
+        println("└─────────────────────────────────────────────────────────────────┘")
+        println("⏱️ Generation Time: ${formatDuration(generationTime)}")
+        println("🧹 Cleanup Time: ${formatDuration(cleanupTime)}")
+        println("🎯 Total Time: ${formatDuration(totalTime)}")
+        println()
+        println("📁 Files Removed: ${cleanupStats.filesRemoved}")
+        println("🗂️  Dirs Removed: ${cleanupStats.dirsRemoved}")
+        println("📦 Size Freed: ${formatBytes(cleanupStats.bytesFreed)}")
         println()
         println("🎉 TypeScript API client ready to use!")
     }
 
     private fun printErrorFooter(error: Exception, totalTime: Long) {
         println()
-        println("╔════════════════════════════════════════════════════════════════╗")
-        println("║                      ❌ GENERATION FAILED                       ║")
-        println("╠════════════════════════════════════════════════════════════════╣")
-        println("║                                                                ║")
-        println("║  ⏱️  Duration: ${formatDuration(totalTime).padEnd(44)} ║")
-        println("║  💥 Error:    ${(error.message ?: "Unknown error").take(45).padEnd(45)} ║")
-        println("║                                                                ║")
-        println("╚════════════════════════════════════════════════════════════════╝")
+        println("┌─────────────────────────────────────────────────────────────────┐")
+        println("│                     ❌ GENERATION FAILED                         │")
+        println("└─────────────────────────────────────────────────────────────────┘")
+        println("⏱️ Duration: ${formatDuration(totalTime)}")
+        println("💥 Error: ${error.message ?: "Unknown error"}")
         println()
     }
 
     private fun printNotFoundError() {
         println()
-        println("╔════════════════════════════════════════════════════════════════╗")
-        println("║                    ⚠️  SCHEMA FILE NOT FOUND                   ║")
-        println("╠════════════════════════════════════════════════════════════════╣")
-        println("║                                                                ║")
-        println("║  🔍 Looking for: ${fromFilename.padEnd(43)} ║")
-        println("║  📍 Expected at: ${("${project.name}$fromLocation").take(43).padEnd(43)} ║")
-        println("║                                                                ║")
-        println("║  💡 Try running: gradle generateOpenApiDocs                    ║")
-        println("║                                                                ║")
-        println("╚════════════════════════════════════════════════════════════════╝")
+        println("┌─────────────────────────────────────────────────────────────────┐")
+        println("│                   ⚠️  SCHEMA FILE NOT FOUND                     │")
+        println("└─────────────────────────────────────────────────────────────────┘")
+        println("🔍 Looking for: $fromFilename")
+        println("📍 Expected at: ${project.name}$fromLocation")
+        println()
+        println("💡 Try running: gradle generateOpenApiDocs")
         println()
     }
 
@@ -266,16 +252,6 @@ fun Project.registerOpenApiAxiosApiTsTask() = tasks.register<OpenApiAxiosTypeScr
 //        inputs.file(File("${project.projectDir}$fromLocation/$fromFilename"))
 //        outputs.dir(File("${project.rootDir}/$toFolder"))
     }
-}
-
-private fun formatTableCell(label: String, value: String): String {
-    // Всего 64 символа между ║, минус 3 для начальных пробелов = 61 символ для контента
-    val totalWidth = 61
-    val labelWithoutEmoji = label.replace(Regex("[\uD83C-\uDBFF\uDC00-\uDFFF]+"), "X") // заменяем emoji на X для расчета
-    val usedWidth = labelWithoutEmoji.length + 1 + value.length // +1 для пробела
-    val paddingNeeded = maxOf(0, totalWidth - usedWidth)
-
-    return "$label $value${" ".repeat(paddingNeeded)}"
 }
 
 val Project.apiGen: TaskProvider<OpenApiAxiosTypeScriptCodeGenerator>
