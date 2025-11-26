@@ -39,6 +39,7 @@ open class OpenApiAxiosTypeScriptCodeGenerator : Executor() {
     @get:Input var modelPackage   : String  = "models"
 
     @get:Input var enablePostProcessFile : Boolean = false
+    @get:Input var mapSetsToArrays : Boolean = true
 
 
     @TaskAction override fun exec() {
@@ -53,6 +54,7 @@ open class OpenApiAxiosTypeScriptCodeGenerator : Executor() {
             printStartHeader()
 
             val generator = "--generator-name $generatorName"
+            val mappings = if (mapSetsToArrays) "--type-mappings set=Array" else ""
             val additional = "--additional-properties=$arguments"
 
             val cliPath: String = ProcessBuilder("/bin/bash", "-l", "-c", "which openapi-generator-cli")
@@ -68,7 +70,7 @@ open class OpenApiAxiosTypeScriptCodeGenerator : Executor() {
             val startTime = System.currentTimeMillis()
 
             try {
-                command = "$cliPath generate -i $from -o $to $generator $additional"
+                command = "$cliPath generate -i $from -o $to $generator $mappings $additional"
                 super.exec()
 
                 val generationTime = System.currentTimeMillis() - startTime
@@ -158,7 +160,7 @@ open class OpenApiAxiosTypeScriptCodeGenerator : Executor() {
     private fun printStartHeader() {
         println()
         println("┌─────────────────────────────────────────────────────────────────┐")
-        println("│            🔧 TYPESCRIPT API CODE GENERATION                    │")
+        println("│            🔧 TYPESCRIPT API CODE GENERATION                     │")
         println("└─────────────────────────────────────────────────────────────────┘")
         println("📂 Project: ${project.name}")
         println("📄 Schema: $fromFilename")
@@ -167,7 +169,9 @@ open class OpenApiAxiosTypeScriptCodeGenerator : Executor() {
         println("📤 Output: $toFolder")
         println("🔧 Models: ${if (separateModels) "$modelPackage package" else "Inline models"}")
         println("🎮 APIs: $apiPackage")
+        println()
         println("🧹 Cleanup: ${if (deleteNotTSFiles) "Enabled" else "Disabled"}")
+        println("🔄 Map Set->Array: ${if (mapSetsToArrays) "Yes" else "No"}")
         println()
         println("🚀 Starting code generation...")
         println()
