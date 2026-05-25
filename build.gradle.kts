@@ -1,15 +1,19 @@
 plugins {
     `kotlin-dsl`
-    id("com.gradle.plugin-publish") version "2.0.0"
-    id("com.github.ben-manes.versions") version "0.53.0"
+    id("com.gradle.plugin-publish") version "2.1.1"
+    id("com.github.ben-manes.versions") version "0.54.0"
 }
 
-val pluginsVersion = "1.4.10"
+val pluginsVersion = "1.4.11"
 version = pluginsVersion
 group = "online.colaba"
 description = "Docker helper tasks 🐳"
 
 repositories { mavenCentral() }
+
+dependencies {
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.21.3")
+}
 
 gradlePlugin { plugins { create(name) {
     id = "$group.docker"; implementationClass = "$group.TasksRegistrator"; description = "Docker needed tasks";
