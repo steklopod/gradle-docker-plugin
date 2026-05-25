@@ -4,7 +4,9 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
+import org.gradle.work.DisableCachingByDefault
 
+@DisableCachingByDefault(because = "Shells out to external commands (docker / npm / openapi-generator); output is not a deterministic function of declared inputs.")
 open class Executor : DefaultTask() {
     init { group = "help"; description = "Execute a command line process on local machine" }
 

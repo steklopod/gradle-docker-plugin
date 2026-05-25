@@ -9,8 +9,10 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
+import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
+@DisableCachingByDefault(because = "Regenerates the TypeScript API client from an OpenAPI spec via an external `openapi-generator-cli`; output already lives in the repo and is intended to be diffed.")
 open class OpenApiAxiosTypeScriptCodeGenerator : Executor() {
     init {
         group = "$dockerPrefix-${project.name}"
